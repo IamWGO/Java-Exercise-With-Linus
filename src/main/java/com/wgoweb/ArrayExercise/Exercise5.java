@@ -1,6 +1,7 @@
 package com.wgoweb.ArrayExercise;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 /*
@@ -18,15 +19,18 @@ public class Exercise5 {
   static Scanner input = new Scanner(System.in);
   public static void main(String[] args) {
 
-    int exitProgram;
     do {
 
       runJob();
 
-      // Ask if you want to continue ....
-      System.out.print("\n\n==== Do you want to exit ==== \n  [0]  to exit , [any number]  to continue -> ");
-      exitProgram = input.nextInt();
-    } while (exitProgram != 0);
+      System.out.print("\n\n==== Do you want to exit ==== \n  [0]  to exit , [any key]  to continue -> ");
+      String command = input.next();
+
+      if (Objects.equals(command, "0")) break;
+
+    } while (true);
+
+    System.out.println("\n **** Program is ended *** ");
 
 
   }

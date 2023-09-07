@@ -1,6 +1,7 @@
 package com.wgoweb.ArrayExercise;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -21,6 +22,22 @@ public class Exercise2 {
 
   static Scanner input = new Scanner(System.in);
   public static void main(String[] args) {
+    do {
+
+      runJob();
+
+      System.out.print("\n\n==== Do you want to exit ==== \n  [0]  to exit , [any key]  to continue -> ");
+      String command = input.next();
+
+      if (Objects.equals(command, "0")) break;
+
+    } while (true);
+
+    System.out.println("\n **** Program is ended *** ");
+
+  }
+
+  static void runJob(){
     int[] randomNumbers = new int[10];
     // random 10 numbers between 0 - 100
     for (int i=0; i<10; i++) {
@@ -37,7 +54,6 @@ public class Exercise2 {
     } else {
       System.out.print(" Incorrect! the random numbers are " + printNumbers(randomNumbers) );
     }
-
   }
 
   static String printNumbers(int[] randomNumbers) {

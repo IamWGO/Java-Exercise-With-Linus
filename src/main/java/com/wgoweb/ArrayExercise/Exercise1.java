@@ -1,6 +1,7 @@
 package com.wgoweb.ArrayExercise;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 /*
@@ -28,6 +29,22 @@ public class Exercise1 {
 
   public static void main(String[] args) {
 
+    do {
+
+      runJob();
+
+      System.out.print("\n\n==== Do you want to exit ==== \n  [0]  to exit , [any key]  to continue -> ");
+      String command = input.next();
+
+      if (Objects.equals(command, "0")) break;
+
+    } while (true);
+
+    System.out.println("\n **** Program is ended *** ");
+
+  }
+
+  static void runJob(){
     int[] inputNumbers = new int[maxArray];
     // input 5 numbers
     for (int i=0; i<maxArray; i++) {
@@ -35,7 +52,7 @@ public class Exercise1 {
       inputNumbers[i] = input.nextInt();
     }
 
-      //a) Prints the values in one line.
+    //a) Prints the values in one line.
 //      for (int i=0; i<inputNumbers.length; i++) {
 //        System.out.print(inputNumbers[i] + "  ");
 //      }
