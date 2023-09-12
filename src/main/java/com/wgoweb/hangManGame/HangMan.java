@@ -1,4 +1,4 @@
-package com.wgoweb.invidulAssignment;
+package com.wgoweb.hangManGame;
 
 import java.util.Objects;
 import java.util.Scanner;
