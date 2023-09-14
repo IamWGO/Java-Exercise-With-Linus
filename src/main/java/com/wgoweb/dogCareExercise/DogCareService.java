@@ -14,12 +14,14 @@ public class DogCareService {
   }
 
   public void menu(){
-    System.out.println("\n\nLee's Dog School - Menu " +
-            "\n   1. Register" +
-            "\n   2. Check in/ Check out" +
-            "\n   3. All Dogs" +
-            "\n   4. Close program" +
-            "\n    "
+    System.out.println("""
+
+            Lee's Dog School - Menu\s
+               1. Register
+               2. Check in/ Check out
+               3. All Dogs
+               4. Close program
+               \s"""
     );
   }
   public void doProcess(){
@@ -74,13 +76,10 @@ public class DogCareService {
           code = "";
           name = "";
           age = 0;
-          System.out.println("registered  : " + code + " " + name);
+          System.out.println(":: registered  : " + code + " " + name + " :: ");
         }
-        case "5" -> {
-        }
-        default -> {
-          System.out.print("  ** Wrong Command ");
-        }
+        case "5" -> System.out.print(":: Cancel ::");
+        default -> System.out.print("  ** Wrong Command ");
       }
 
       if (Objects.equals(command.toLowerCase(), "5")) break;
@@ -90,7 +89,7 @@ public class DogCareService {
 
   private void checkInCheckOut(){
     System.out.println(":::::::: Check In / Check Out  ::::::::");
-    Boolean isFound = false;
+    boolean isFound = false;
     printAll();
 
     System.out.print("  > Code : ");
@@ -111,10 +110,9 @@ public class DogCareService {
 
   private void printAll() {
     System.out.println(":::::::: All Dogs ::::::::");
-
-    for (int i = 0; i < dogList.length; i++) {
+    for (Dog dog : dogList) {
       // print all registered dogs.
-      System.out.println(dogList[i]);
+      System.out.println(dog);
     }
 
   }
