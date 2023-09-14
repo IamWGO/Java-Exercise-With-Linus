@@ -4,7 +4,7 @@ import java.io.IOException;
 
 /*
 Why we use exception
-*  - for example : read file, api, exception rule  ( ex. device)
+*  - for example : read file, api, exception rule  ( ex. device), you also can write your own exception code
 *  - for indicating error or other exceptional circumstances
 *  - For information specifically relate to the error or exceptional circumstance
 *  - don't use for standard app control flow or conditional logic
@@ -17,8 +17,9 @@ public class Main {
   }
 
   static void checkIfNumber(){
-    String sample = "a";
+    String sample = "a"; // change to number to see result
     try {
+      System.out.println("Yes!! it's a number");
       Integer.valueOf(sample);
     } catch (NumberFormatException ex) {
       System.out.println("Exception : " + ex.getMessage() + " is not number");
@@ -27,11 +28,11 @@ public class Main {
 
   static void notAllowDivideByZero(){
     int i = 12;
-    int j = 2;
+    int j = 2; // change to a number (2 -> ArithmeticException)
 
     try {
       int result = i / (j - 2);
-      System.out.println(result);
+      System.out.println(i + " / ("+ j + " - 2) = " + result);
 
     } catch (ArithmeticException ex) {
       System.out.println("Invalid math operation - " + ex.getMessage());
