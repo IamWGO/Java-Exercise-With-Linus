@@ -1,4 +1,4 @@
-package com.wgoweb.switchExercise;
+package com.wgoweb.switchCase;
 
 import java.util.Scanner;
 

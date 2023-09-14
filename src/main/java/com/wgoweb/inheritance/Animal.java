@@ -1,4 +1,4 @@
-package com.wgoweb.zooInheritance;
+package com.wgoweb.inheritance;
 
 public abstract class Animal {
   // abstract -> expect the child class do something

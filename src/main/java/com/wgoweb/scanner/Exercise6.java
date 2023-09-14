@@ -1,4 +1,4 @@
-package com.wgoweb.scannerExercise;
+package com.wgoweb.scanner;
 
 import java.util.Scanner;
 

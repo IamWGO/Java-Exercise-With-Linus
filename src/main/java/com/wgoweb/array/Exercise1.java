@@ -1,6 +1,5 @@
-package com.wgoweb.ArrayExercise;
+package com.wgoweb.array;
 
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 

@@ -67,14 +67,17 @@ public class DogCareService {
 
     do {
       /*
-       * Explain : ((code.isEmpty()) ? '-' : code)  -> lambda to make the code short
-       * String code = input.next();
-       * String showCode;
-       * if (code.isEmpty()) {
-       *   showCode  = '-';
-       * } else {
-       *   showCode = code;
-       * }
+       * Explain :
+       * ((code.isEmpty()) ? '-' : code)
+       * -> lambda to make the code short
+       * --------------------------------------------
+         * String code = input.next();
+         * String showCode;
+         * if (code.isEmpty()) {
+         *   showCode  = '-';
+         * } else {
+         *   showCode = code;
+         * }
        * */
 
       System.out.println("\n :::::: New Dog :::::: " +
@@ -117,25 +120,43 @@ public class DogCareService {
     } while (true);
   }
 
+  private Dog[] dummy() {
+    return new Dog[] {
+            new Dog("001", "Lee", 2),
+            new Dog("002", "Lee-002", 2),
+            new Dog("003", "Lee-003", 2),
+            new Dog("004", "Lee-004", 2),
+            new Dog("005", "Lee-005", 2),
+            new Dog("006", "Lee-006", 2),
+    };
+  }
+
   private void checkInCheckOut(){
     System.out.println(":::::::: Check In / Check Out  ::::::::");
     boolean isFound = false;
-    printAll();
 
-    System.out.print("  > Code : ");
-    String code = input.next();
-    //for (int i = 0; i < dogList.length; i++) {}
-    for (Dog dog : dogList) {
-      if (dog != null && dog.code.equals(code)) {
-        dog.isHere = !dog.isHere;
-        isFound = true;
-        System.out.println(":: Updated "+ dog.name +" - " + dog.isHere+ " ::");
-        break; // Exit the loop when a match is found
+    do {
+      dogList = dummy(); // Testing
+      printAll();
+
+      System.out.print("\n Q to exit or Code : ");
+      String code = input.next();
+
+      if (Objects.equals(code, "q")) break;
+
+      //for (int i = 0; i < dogList.length; i++) {}
+      for (Dog dog : dogList) {
+        if (dog != null && dog.code.equals(code)) {
+          dog.isHere = !dog.isHere;
+          isFound = true;
+          System.out.println(":: Updated "+ dog.name +" - " + dog.isHere+ " ::");
+          break; // Exit the loop when a match is found
+        }
       }
-    }
 
-    if (!isFound)
-      System.out.println(":: Not Found, try again!!! ::");
+      if (!isFound)
+        System.out.println(":: Not Found, try again!!! ::");
+    } while (true);
   }
 
   private void printAll() {
