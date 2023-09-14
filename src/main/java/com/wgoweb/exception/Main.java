@@ -12,6 +12,20 @@ Why we use exception
 * */
 public class Main {
   public static void main(String[] args) {
+    checkIfNumber();
+    notAllowDivideByZero();
+  }
+
+  static void checkIfNumber(){
+    String sample = "a";
+    try {
+      Integer.valueOf(sample);
+    } catch (NumberFormatException ex) {
+      System.out.println("Exception : " + ex.getMessage() + " is not number");
+    }
+  }
+
+  static void notAllowDivideByZero(){
     int i = 12;
     int j = 2;
 
