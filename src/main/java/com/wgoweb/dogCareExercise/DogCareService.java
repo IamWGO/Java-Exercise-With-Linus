@@ -1,5 +1,6 @@
 package com.wgoweb.dogCareExercise;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
@@ -7,7 +8,7 @@ import java.util.Scanner;
 public class DogCareService {
   Scanner input = new Scanner(System.in);
   private Boolean isContinue = true;
-  Dog[] dogList = new Dog[0];
+  private Dog[] dogList = new Dog[0];
 
   public Boolean getContinue() {
     return isContinue;
@@ -27,6 +28,23 @@ public class DogCareService {
   public void doProcess(){
     System.out.print("Select : ");
     String choice = input.next();
+    /*lambda to make the code short
+    * switch (choice) {
+    * case "1" : register(); break;
+    * .....2,3.......
+    * case "4" : {
+    *   System.out.println("End program !!");
+    *   isContinue = false;
+    *   break;
+    *   }
+    * default : {
+    *   System.out.println("Failed input number 1,2,3 or 4!!");
+    *   break;
+    *   }
+    * }
+    *
+    * }
+    * */
     switch (choice) {
       case "1" -> register();
       case "2" -> checkInCheckOut();
@@ -35,7 +53,7 @@ public class DogCareService {
         System.out.println("End program !!");
         isContinue = false;
       }
-      default -> System.out.println("Failed !!");
+      default -> System.out.println("Failed input number 1,2,3 or 4!!");
     }
   }
 
@@ -48,13 +66,25 @@ public class DogCareService {
     int age = 0;
 
     do {
+      /*
+       * Explain : ((code.isEmpty()) ? '-' : code)  -> lambda to make the code short
+       * String code = input.next();
+       * String showCode;
+       * if (code.isEmpty()) {
+       *   showCode  = '-';
+       * } else {
+       *   showCode = code;
+       * }
+       * */
+
       System.out.println("\n :::::: New Dog :::::: " +
-              "\n   1. Code" + " " + code + " " +
-              "\n   2. Name" + " " + name + " " +
-              "\n   3. Age" + " " + age + " " +
+              "\n   1. Code" + " " + ((code.isEmpty()) ? '-' : code) + " " +
+              "\n   2. Name" + " " + ((name.isEmpty()) ? '-' : name) + " " +
+              "\n   3. Age" + " " + ((age == 0) ? "-" : String.valueOf(age)) + " " +
               "\n   4. Save" +
               "\n   5. Cancel "
       );
+
       System.out.print("  Select a number : ");
       String command = input.next();
 
@@ -73,10 +103,10 @@ public class DogCareService {
         }
         case "4" -> {
           addDogToList(code, name, age);
+          System.out.println(":: registered  : " + code + " " + name + " :: ");
           code = "";
           name = "";
           age = 0;
-          System.out.println(":: registered  : " + code + " " + name + " :: ");
         }
         case "5" -> System.out.print(":: Cancel ::");
         default -> System.out.print("  ** Wrong Command ");
@@ -94,7 +124,7 @@ public class DogCareService {
 
     System.out.print("  > Code : ");
     String code = input.next();
-
+    //for (int i = 0; i < dogList.length; i++) {}
     for (Dog dog : dogList) {
       if (dog != null && dog.code.equals(code)) {
         dog.isHere = !dog.isHere;
@@ -110,6 +140,7 @@ public class DogCareService {
 
   private void printAll() {
     System.out.println(":::::::: All Dogs ::::::::");
+    //for (int i = 0; i < dogList.length; i++) {}
     for (Dog dog : dogList) {
       // print all registered dogs.
       System.out.println(dog);
