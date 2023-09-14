@@ -3,6 +3,12 @@ package com.wgoweb.zooInheritance;
 public class Main {
   public static void main(String[] args) {
     // Define Bird inherit Animal
+    System.out.println(" -------------Tiger-------------- ");
+    Tiger tiger = new Tiger();
+    tiger.information();
+    tiger.eat();
+
+    // Define Bird inherit Animal
     System.out.println(" -------------bird-------------- ");
     Bird bird = new Bird();
     bird.information();
@@ -22,7 +28,7 @@ public class Main {
 
     // We can define array with all animals
     System.out.println(" -------------Array-------------- ");
-    Animal[] animals = new Animal[]{ snake, bird, elephant};
+    Animal[] animals = new Animal[]{ tiger, snake, bird, elephant};
 
     for (Animal animal : animals) {
       System.out.println(" >> Name : " + animal.getName());
