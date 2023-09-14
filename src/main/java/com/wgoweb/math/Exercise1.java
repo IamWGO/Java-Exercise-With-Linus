@@ -1,4 +1,4 @@
-package com.wgoweb.mathExercise;
+package com.wgoweb.math;
 
 /**
  * 1. Skriv ett program som avrundar decimaltal till närmsta heltal.*/

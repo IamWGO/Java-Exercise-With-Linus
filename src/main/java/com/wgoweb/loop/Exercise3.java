@@ -1,6 +1,4 @@
-package com.wgoweb.loopExercise;
-
-import java.util.Scanner;
+package com.wgoweb.loop;
 
 /**
  *

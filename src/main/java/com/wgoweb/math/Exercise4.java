@@ -1,6 +1,4 @@
-package com.wgoweb.mathExercise;
-
-import java.util.Random;
+package com.wgoweb.math;
 
 /**
  * 4. Skriv ett program som slumpar fram ett tal mellan 50 och 100.*/

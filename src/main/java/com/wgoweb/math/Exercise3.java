@@ -1,4 +1,4 @@
-package com.wgoweb.mathExercise;
+package com.wgoweb.math;
 
 /**
  * 3. Skriv ett program som slumpar fram ett tal mellan 0 och 10.*/

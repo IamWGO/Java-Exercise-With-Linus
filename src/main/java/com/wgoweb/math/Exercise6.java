@@ -1,4 +1,4 @@
-package com.wgoweb.mathExercise;
+package com.wgoweb.math;
 
 /**
  * 6. Skriv ett program som räknar ut volymen på en kub.*/

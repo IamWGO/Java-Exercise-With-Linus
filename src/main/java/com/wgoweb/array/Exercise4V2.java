@@ -1,4 +1,4 @@
-package com.wgoweb.ArrayExercise;
+package com.wgoweb.array;
 
 /*
  * Skapa ett program där användaren skriver in 10 String värden i en array

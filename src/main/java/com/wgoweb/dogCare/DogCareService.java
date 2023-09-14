@@ -1,6 +1,5 @@
-package com.wgoweb.dogCareExercise;
+package com.wgoweb.dogCare;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;

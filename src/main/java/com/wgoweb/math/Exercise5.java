@@ -1,4 +1,4 @@
-package com.wgoweb.mathExercise;
+package com.wgoweb.math;
 
 import java.util.Random;
 

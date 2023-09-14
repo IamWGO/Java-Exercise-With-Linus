@@ -1,4 +1,4 @@
-package com.wgoweb.mathExercise;
+package com.wgoweb.math;
 
 /**
  * 2. Skriv ett program som räknar ut hypotenusan på en rätvinklig triangel.*/

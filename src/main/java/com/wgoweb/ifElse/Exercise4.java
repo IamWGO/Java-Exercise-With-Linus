@@ -1,4 +1,4 @@
-package com.wgoweb.ifElseExercise;
+package com.wgoweb.ifElse;
 
 /*
 Skriv om denna koden så den är lättare att läsa

@@ -1,4 +1,4 @@
-package com.wgoweb.dogCareExercise;
+package com.wgoweb.dogCare;
 
 public class Main {
   public static void main(String[] args) {

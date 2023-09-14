@@ -1,4 +1,4 @@
-package com.wgoweb.ifElseExercise;
+package com.wgoweb.ifElse;
 
 import java.util.Scanner;
 

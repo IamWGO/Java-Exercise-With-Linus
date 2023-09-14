@@ -1,4 +1,4 @@
-package com.wgoweb.zooInheritance;
+package com.wgoweb.inheritance;
 
 public class Main {
   public static void main(String[] args) {
