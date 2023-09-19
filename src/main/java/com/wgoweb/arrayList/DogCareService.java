@@ -10,7 +10,173 @@ public class DogCareService {
 
   public void run(){
     dogList = getDogMembers();
-    printAllDogs(dogList);
+    menu();
+  }
+
+  public void menu() {
+    Scanner scan = new Scanner(System.in);
+    boolean run = true;
+    while (run) {
+      printMenu();
+      String choice = scan.nextLine();
+
+      switch (choice) {
+        case "1" -> registerDog();
+        case "2" -> pickADogToRemoveFromList();
+        case "3" -> printCheckInList();
+        case "4" -> printAllDogs();
+        case "5" -> {
+          System.out.println("Programmet Avslutas! Ha en fortsatt trevlig dag :)");
+          run = false;
+        }
+        default -> System.out.println("Du måste välja mellan 1, 2, 3 eller 4.");
+      }
+    }
+  }
+
+  private void printAllDogs(){
+    Dog.output.printHeadLine();
+    for (int i = 0; i < dogList.size(); i++) {
+      System.out.println(dogList.get(i).printDogRow(i));
+    }
+  }
+
+  private void registerDog(){
+    Scanner scan = new Scanner(System.in);
+
+    String name = "";
+    int birthYear = 0;
+    String race = "";
+    String color = "";
+    String owner = "";
+    boolean specialNeeds = false;
+    int weight = 0;
+    String bark = "";
+
+    boolean run = true;
+    while (run) {
+      System.out.println("Registrera Hund" +
+              "\n1. Name - " + name +
+              "\n2. Birth year - " + birthYear +
+              "\n3. Race - " + race +
+              "\n4. Color - " + color +
+              "\n5. Owner - " + owner +
+              "\n6. SpecialNeeds - " + specialNeeds +
+              "\n7. Weight - " + weight +
+              "\n8. Bark - " + bark +
+              "\n9. Spara" +
+              "\nQ. Gå tillbaka" +
+              "\n\n Val -");
+      String choice = scan.nextLine();
+
+      switch (choice) {
+        case "1" -> {
+          System.out.println("Name: ");
+          name = scan.nextLine();
+        }
+        case "2" -> {
+          System.out.println("Birth year: ");
+          birthYear = scan.nextInt();
+        }
+        case "3" -> {
+          System.out.println("Race: ");
+          race = scan.nextLine();
+        }
+        case "4" -> {
+          System.out.println("Color: ");
+          color = scan.nextLine();
+        }
+        case "5" -> {
+          System.out.println("Owner: ");
+          owner = scan.nextLine();
+        }
+        case "6" -> specialNeeds = !specialNeeds;
+        case "7" -> {
+          System.out.println("Weight: ");
+          weight = scan.nextInt();
+        }
+        case "8" -> {
+          System.out.println("Bark: ");
+          bark = scan.nextLine();
+        }
+        case "9" -> {
+          Dog tempDog = new Dog(name, birthYear, race, color, owner, specialNeeds, weight, bark);
+          addDogToDaycare(tempDog);
+          run = false;
+        }
+        case "Q" -> run = false;
+        default -> System.out.println("Måste välja 1 - 9 eller Q.");
+      }
+    }
+  }
+
+  private void addDogToDaycare(Dog newDog) {
+    this.dogList.add(newDog);
+  }
+
+  private void pickADogToRemoveFromList() {
+    Scanner scan = new Scanner(System.in);
+
+    while (true) {
+      printAllDogs();
+
+      System.out.println("""
+
+              Q. Gå tillbaka
+
+              Välj en siffra för att ta bort en hund från listan.
+              Val -""");
+      String inputString = scan.nextLine();
+
+      if(inputString.equalsIgnoreCase("q")){
+        break;
+      }
+
+      try {
+        int choice = Integer.parseInt(inputString);
+        if (choice <= this.dogList.size() && choice > 0){
+          removeDogFromList(choice - 1);
+        } else {
+          System.out.println("Du måste välja 1 - " + this.dogList.size() + " eller Q!");
+        }
+       } catch (NumberFormatException ex) {
+        System.out.println("Du måste välja 1 - " + this.dogList.size() + " eller Q!");
+      }
+
+    }
+  }
+
+  private void printCheckInList(){
+    Scanner scan = new Scanner(System.in);
+
+    System.out.println();
+    while (true) {
+      printAllDogs();
+
+      System.out.println("""
+
+              Q. Gå tillbaka
+
+              Välj en siffra för att ändra på en hunds isHere
+              Val -""");
+      String inputString = scan.nextLine();
+
+      if(inputString.equalsIgnoreCase("q")){
+        break;
+      }
+
+      try {
+        int choice = Integer.parseInt(inputString);
+        if (choice <= this.dogList.size() && choice > 0){
+          this.dogList.get(choice - 1).checkInCheckOut();
+        } else {
+          System.out.println("Du måste välja 1 - " + this.dogList.size() + " eller Q!");
+        }
+      } catch (NumberFormatException ex) {
+        System.out.println("Du måste välja 1 - " + this.dogList.size() + " eller Q!");
+      }
+
+    }
   }
 
   private  ArrayList<Dog> getDogMembers(){
@@ -18,7 +184,9 @@ public class DogCareService {
 
     String filename = "src/main/java/com/wgoweb/arrayList/DogMember.text";
     try (Scanner contentLines  = new Scanner(new File(filename))) {
+
       while (contentLines.hasNextLine()) {
+
         String[] parts = contentLines.nextLine().split(",");
         try {
           // Extract the values from the split parts and create a Dog object
@@ -45,26 +213,25 @@ public class DogCareService {
     return dogs;
   }
 
-  private void printAllDogs(ArrayList<Dog> dogList){
 
-    for (int i = 0; i < dogList.size(); i++) {
-      System.out.println(i + ". Dog Name " + dogList.get(i).name);
-    }
-
+  public void removeDogFromList(int removeDogIndex){
+    dogList.remove(removeDogIndex);
   }
 
-  private void addNewDog(){
 
+
+  public void printMenu(){
+    System.out.println("""
+
+              Linus Hunddagis - Meny
+              1. Registrera en ny hund
+              2. Ta bort en hund
+              3. Checka in / Checka ut
+              4. Se alla registrerade hundar
+              5. Stäng programmet
+
+              Val:\s""");
   }
-
-  private void checkInCheckOutDog(){
-
-  }
-
-  private void deleteDog(){
-
-  }
-
 
 
 
