@@ -14,13 +14,14 @@ public class DogCareService {
   }
 
   public void menu(){
+    dogList = dummy(); // Testing
     System.out.println("""
 
             Lee's Dog School - Menu\s
                1. Register
                2. Check in/ Check out
                3. All Dogs
-               4. Close program
+               Q. Close program
                \s"""
     );
   }
@@ -44,12 +45,21 @@ public class DogCareService {
     *
     * }
     * */
-    switch (choice) {
-      case "1" -> register();
-      case "2" -> checkInCheckOut();
-      case "3" -> printAll();
-      case "4" -> {
-        System.out.println("End program !!");
+    switch (choice.toUpperCase()) {
+      case "1" -> {
+        System.out.println(":::::::: register Dog(s) ::::::::");
+        register();
+      }
+      case "2" -> {
+        System.out.println(":::::::: Check In / Check Out  ::::::::");
+        checkInCheckOut();
+      }
+      case "3" -> {
+        System.out.println(":::::::: All Dogs ::::::::");
+        printAll();
+      }
+      case "Q" -> {
+        System.out.println(":::::::: End program !! ::::::::");
         isContinue = false;
       }
       default -> System.out.println("Failed input number 1,2,3 or 4!!");
@@ -57,9 +67,6 @@ public class DogCareService {
   }
 
   private void register(){
-
-    System.out.println(":::::::: register Dog(s) ::::::::");
-
     String code = "";
     String name = "";
     int age = 0;
@@ -84,13 +91,13 @@ public class DogCareService {
               "\n   2. Name" + " " + ((name.isEmpty()) ? '-' : name) + " " +
               "\n   3. Age" + " " + ((age == 0) ? "-" : String.valueOf(age)) + " " +
               "\n   4. Save" +
-              "\n   5. Cancel "
+              "\n   Q. Cancel "
       );
 
       System.out.print("  Select a number : ");
       String command = input.next();
 
-      switch (command) {
+      switch (command.toUpperCase()) {
         case "1" -> {
           System.out.print("  > Code : ");
           code = input.next();
@@ -110,16 +117,19 @@ public class DogCareService {
           name = "";
           age = 0;
         }
-        case "5" -> System.out.print(":: Cancel ::");
+        case "Q" -> {
+          System.out.print(":: Cancel ::");
+        }
         default -> System.out.print("  ** Wrong Command ");
       }
 
-      if (Objects.equals(command.toLowerCase(), "5")) break;
+      if (Objects.equals(command.toUpperCase(), "Q")) break;
 
     } while (true);
   }
 
   private Dog[] dummy() {
+    System.out.println("\n:::::::: Set dummy data  ::::::::");
     return new Dog[] {
             new Dog("001", "Lee", 2),
             new Dog("002", "Lee-002", 2),
@@ -131,14 +141,12 @@ public class DogCareService {
   }
 
   private void checkInCheckOut(){
-    System.out.println(":::::::: Check In / Check Out  ::::::::");
     boolean isFound = false;
 
     do {
-      dogList = dummy(); // Testing
       printAll();
-
-      System.out.print("\n Q to exit or Code : ");
+      System.out.println("\n Q. Exit ");
+      System.out.print("Code : ");
       String code = input.next();
 
       if (Objects.equals(code, "q")) break;
@@ -159,11 +167,11 @@ public class DogCareService {
   }
 
   private void printAll() {
-    System.out.println(":::::::: All Dogs ::::::::");
     //for (int i = 0; i < dogList.length; i++) {}
-    for (Dog dog : dogList) {
+    for (int i = 0; i < dogList.length; i++) {
       // print all registered dogs.
-      System.out.println(dog);
+      System.out.print((i + 1) + ". ");
+      System.out.println(dogList[i]);
     }
 
   }
