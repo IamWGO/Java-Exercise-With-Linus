@@ -1,6 +1,6 @@
 package com.wgoweb.exception;
 
-public class NumberFormat {
+public class ExceptionNumberFormat {
   public static void main(String[] args) {
     String sample = "a"; // change to number to see result
     try {

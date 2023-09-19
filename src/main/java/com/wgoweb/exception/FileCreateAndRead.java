@@ -2,7 +2,7 @@ package com.wgoweb.exception;
 
 import java.io.*;
 
-public class SampleException {
+public class FileCreateAndRead {
   public static void main(String[] args) {
     /*
     String fileName = "example.txt";

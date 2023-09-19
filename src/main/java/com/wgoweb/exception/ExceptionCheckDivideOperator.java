@@ -1,7 +1,5 @@
 package com.wgoweb.exception;
 
-import java.io.IOException;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /*
@@ -12,7 +10,7 @@ Why we use exception
 *  - don't use for standard app control flow or conditional logic
 *  - don't use for bypassing parameters or method return value
 * */
-public class Main {
+public class ExceptionCheckDivideOperator {
   static final Scanner input = new Scanner(System.in);
   public static void main(String[] args) {
     int i = 12;

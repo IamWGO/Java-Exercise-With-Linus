@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class ReadFileWithBufferedReader {
+public class FileReadWithBufferedReader {
   public static void main(String[] args) {
     String filename = "src/ContentFile.text";
     try (BufferedReader reader = new BufferedReader(new FileReader(filename))){
