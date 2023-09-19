@@ -1,6 +1,8 @@
 package com.wgoweb.exception;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 /*
 Why we use exception
@@ -11,24 +13,8 @@ Why we use exception
 *  - don't use for bypassing parameters or method return value
 * */
 public class Main {
+  static final Scanner input = new Scanner(System.in);
   public static void main(String[] args) {
-    checkIfNumber();
-    notAllowDivideByZero();
-  }
-
-
-  static void checkIfNumber(){
-    String sample = "a"; // change to number to see result
-    try {
-      System.out.println("Yes!! it's a number");
-      Integer.valueOf(sample);
-      
-    } catch (NumberFormatException ex) {
-      System.out.println("Exception : " + ex.getMessage() + " is not number");
-    }
-  }
-
-  static void notAllowDivideByZero(){
     int i = 12;
     int j = 2; // change to a number (2 -> ArithmeticException)
 
@@ -42,4 +28,5 @@ public class Main {
       System.out.println("Error: " + ex.getMessage());
     }
   }
+
 }
