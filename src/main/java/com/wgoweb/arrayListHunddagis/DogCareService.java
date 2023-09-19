@@ -1,4 +1,4 @@
-package com.wgoweb.arrayList;
+package com.wgoweb.arrayListHunddagis;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -181,8 +181,7 @@ public class DogCareService {
 
   private  ArrayList<Dog> getDogMembers(){
     ArrayList<Dog> dogs = new ArrayList<>();
-
-    String filename = "src/main/java/com/wgoweb/arrayList/DogMember.text";
+    String filename = "src/main/java/com/wgoweb/arrayListHunddagis/DogMember.text";
     try (Scanner contentLines  = new Scanner(new File(filename))) {
 
       while (contentLines.hasNextLine()) {

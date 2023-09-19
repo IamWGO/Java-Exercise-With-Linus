@@ -1,4 +1,4 @@
-package com.wgoweb.arrayList;
+package com.wgoweb.arrayListHunddagis;
 
 public class Dog {
   String name;
