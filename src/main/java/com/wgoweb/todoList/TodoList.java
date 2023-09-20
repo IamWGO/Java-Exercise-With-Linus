@@ -106,7 +106,7 @@ public class TodoList {
       try {
         int choice = Integer.parseInt(inputString);
         if (choice <= this.taskList.size() && choice > 0){
-          this.taskList.get(choice - 1).updateStatus();
+          this.taskList.get(choice - 1).setDone();
         } else {
           System.out.println(warning);
         }

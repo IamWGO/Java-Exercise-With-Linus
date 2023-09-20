@@ -20,7 +20,6 @@ Skapa en meny som innehåller valen
 * */
 public class TodoListDel1 {
   Scanner scan = new Scanner(System.in);
-
   ArrayList<Task> taskList  = new ArrayList<>();
 
   public void run() {
@@ -38,7 +37,7 @@ public class TodoListDel1 {
         case "3" -> removeFirstList();
         case "4" -> removeLastList();
         case "Q" -> {
-          System.out.println("Exit Program :)");
+          System.out.println("Exit Del 1 :)");
           run = false; // quit while loop
         }
         default -> System.out.println("Input number 1-4 or Q to exit program");
@@ -223,11 +222,13 @@ public class TodoListDel1 {
 
   String getFirstContent(){
     return
-            "0,Exercise,Go for a 30-minute jog in the park,07:00\n" +
-            "0,Check Email,Review and respond to important emails,09:15\n" +
-            "1,Go Shopping,Need to buy groceries and household items,11:00\n" +
-            "0,Pick Up Kids,Go to school to pick up the children,15:30\n" +
-            "1,Do Homework,Complete math and science assignments,18:00\n"
+            """
+                    0,Exercise,Go for a 30-minute jog in the park,07:00
+                    0,Check Email,Review and respond to important emails,09:15
+                    1,Go Shopping,Need to buy groceries and household items,11:00
+                    0,Pick Up Kids,Go to school to pick up the children,15:30
+                    1,Do Homework,Complete math and science assignments,18:00
+                    """
             ;
   }
 
@@ -240,7 +241,7 @@ public class TodoListDel1 {
               1. Skriv ut listan
               2. Lägg till något i listan
               3. Ta bort en sak överst i listan
-              4. Ta bort en sak längst ner i listan 
+              4. Ta bort en sak längst ner i listan
               
               Q. Avsluta programmet
              Select :\s""");

@@ -2,7 +2,6 @@ package com.wgoweb.todoList;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class Task {
@@ -25,7 +24,7 @@ public class Task {
     this.isDone = isDone;
   }
 
-  public void updateStatus() {
+  public void setDone() {
     this.isDone = !this.isDone;
   }
 
