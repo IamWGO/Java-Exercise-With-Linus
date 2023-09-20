@@ -52,6 +52,7 @@ public class TodoListDel2 {
       for (int i = 0; i < taskList.size(); i++) {
         Task.output.printTaskRow(i, taskList.get(i));
       }
+      System.out.println();
     }
   }
 
@@ -86,7 +87,8 @@ public class TodoListDel2 {
       // quit while loop if it has no task
       if (taskList.isEmpty()) break;
 
-      System.out.println(warning);
+      System.out.println( "Which one do you want to change status ? " );
+
       System.out.print("Select index : ");
       String inputString = scan.nextLine();
 
@@ -127,23 +129,32 @@ public class TodoListDel2 {
       // return -1 if no record
       int selectedIndex = searchTaskByIndex(inputString);
 
-      if (selectedIndex >= 0) {
-        Task selectedTask = taskList.get(selectedIndex);
-        if (isMoveToTop){
-          taskList.remove(selectedIndex);
-          taskList.add(0, selectedTask);
-          System.out.print("> Moved "+ selectedTask.getTitle() +" to the top. ");
-        }  else {
-          taskList.remove(selectedIndex);
-          taskList.add(selectedTask);
-          System.out.print("> Moved "+ selectedTask.getTitle() +" to the bottom. ");
+      if (selectedIndex == -1) {
+        System.out.println("Not found recode !!");
+        System.out.println(guideText);
+        continue;
+      }
+
+      Task selectedTask = taskList.get(selectedIndex);
+      if (isMoveToTop){
+        if (selectedIndex == 0) {
+          System.out.println("> \""+ selectedTask.getTitle() +"\" already in the top. ");
+          continue;
         }
 
-        System.out.println(guideText);
-        printAllTask();
+        taskList.remove(selectedIndex);
+        taskList.add(0, selectedTask);
+        System.out.println("> Moved \""+ selectedTask.getTitle() +"\" to the top. ");
 
-      } else {
-        System.out.println(guideText);
+      }  else {
+        if (selectedIndex == taskList.size()-1) {
+          System.out.println("> \""+ selectedTask.getTitle() +"\" already in the bottom. ");
+          continue;
+        }
+
+        taskList.remove(selectedIndex);
+        taskList.add(selectedTask);
+        System.out.println("> Moved "+ selectedTask.getTitle() +" to the bottom. ");
       }
 
     }
@@ -166,38 +177,36 @@ public class TodoListDel2 {
         break;
       }
 
-      printAllTask();
       // return -1 if no record
       int selectedIndex = searchTaskByIndex(inputString);
 
-      if (selectedIndex >= 0) {
-        Task selectedTask = taskList.get(selectedIndex);
-        if (isMoveUp){
-          if (selectedIndex > 0) {
-            taskList.remove(selectedIndex);
-            taskList.add(selectedIndex -1, selectedTask);
-            System.out.println("> Moved "+ selectedTask.getTitle() +" up 1 step. ");
-          } else {
-            System.out.println("> "+ selectedTask.getTitle() +" already in first of the list. ");
-          }
-
-        }  else {
-          if (selectedIndex < (taskList.size() -1)) {
-            taskList.remove(selectedIndex);
-            taskList.add(selectedIndex + 1 ,selectedTask);
-            System.out.println("> Moved "+ selectedTask.getTitle() +" down 1 step. ");
-          } else {
-            System.out.println("> "+ selectedTask.getTitle() +" already in last of the list. ");
-          }
-        }
-
-        // Print current task list
-        System.out.println(guideText);
-        printAllTask();
-
-      } else {
+      if (selectedIndex == -1){
+        System.out.println("Not found recode !!");
         System.out.println(guideText);
         scan.next();
+        continue;
+      }
+
+      Task selectedTask = taskList.get(selectedIndex);
+      if (isMoveUp){
+        if (selectedIndex == 0) {
+          System.out.println("> \""+ selectedTask.getTitle() +"\" already in first of the list. ");
+          continue;
+        }
+
+        taskList.remove(selectedIndex);
+        taskList.add(selectedIndex -1, selectedTask);
+        System.out.println("> Moved \""+ selectedTask.getTitle() +"\" up 1 step. ");
+
+      }  else {
+        if (selectedIndex == (taskList.size() -1)) {
+          System.out.println("> \""+ selectedTask.getTitle() +"\" already in last of the list. ");
+          continue;
+        }
+
+        taskList.remove(selectedIndex);
+        taskList.add(selectedIndex + 1 ,selectedTask);
+        System.out.println("> Moved \""+ selectedTask.getTitle() +"\" down 1 step. ");
       }
     }
   }
@@ -237,7 +246,7 @@ public class TodoListDel2 {
         // remove record
         taskList.remove(index - 1);
         printAllTask();
-        System.out.println(" :: Record "+ removingTitle +" is removed :: ");
+        System.out.println(" :: Record \""+ removingTitle +"\" is removed :: ");
 
         break;
 
@@ -267,7 +276,7 @@ public class TodoListDel2 {
         taskList.remove(i);
         printAllTask();
         isDelete = true;
-        System.out.println(" :: Record "+ removingTitle +" is removed :: ");
+        System.out.println(" :: Record \""+ removingTitle +"\" is removed :: ");
         break; // Stop searching once found
       }
     }

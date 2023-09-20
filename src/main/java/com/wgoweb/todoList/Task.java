@@ -47,6 +47,9 @@ public class Task {
               addWhiteSpace("Time", maxTime) + "| " +
               addWhiteSpace( "Title", maxTitle) + "| " +
               addWhiteSpace( "Description", maxDescription);
+
+      System.out.println();
+      System.out.println("-".repeat(headline.length()));
       System.out.println(headline);
       System.out.println("-".repeat(headline.length()));
     }
