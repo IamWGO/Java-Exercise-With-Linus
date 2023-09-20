@@ -11,11 +11,6 @@ public class Task {
   int minute;
   boolean isDone;
 
-  static int maxIsDone = 8;
-  static int maxTime = 8;
-  static int maxTitle = 25;
-  static int maxDescription = 50;
-
   public Task(String title, String description, int time, int minute, boolean isDone) {
     this.title = title;
     this.description = description;
@@ -32,17 +27,13 @@ public class Task {
     return title;
   }
 
-
-  public String printTaskRow(int rowIndex) {
-    return output.addWhiteSpace((rowIndex+1) + ".", 3) + "| " +
-            output.addWhiteSpace((isDone ? "Yes" : "No"), Task.maxIsDone) + "| " +
-            output.addWhiteSpace(output.getTime(hour,minute), Task.maxTime) + "| " +
-            output.addWhiteSpace( ((!title.isEmpty()) ? title : "-"), Task.maxTitle) + "| " +
-            output.addWhiteSpace( ((!description.isEmpty()) ? description : "-"), Task.maxDescription);
-  }
-
   // Subclass for output
   public static class output {
+
+    static int maxIsDone = 8;
+    static int maxTime = 8;
+    static int maxTitle = 25;
+    static int maxDescription = 50;
     public static String addWhiteSpace(String text, int maxAmount){
       if(text.length() > maxAmount){
         return text.substring(0, maxAmount - 3) + "...";
@@ -52,14 +43,22 @@ public class Task {
 
     public static void printHeadLine(){
       String headline = addWhiteSpace("No.", 3) + "| " +
-              addWhiteSpace("Done", Task.maxIsDone) + "| " +
-              addWhiteSpace("Time", Task.maxTime) + "| " +
-              addWhiteSpace( "Title", Task.maxTitle) + "| " +
-              addWhiteSpace( "Description", Task.maxDescription);
+              addWhiteSpace("Done", maxIsDone) + "| " +
+              addWhiteSpace("Time", maxTime) + "| " +
+              addWhiteSpace( "Title", maxTitle) + "| " +
+              addWhiteSpace( "Description", maxDescription);
       System.out.println(headline);
       System.out.println("-".repeat(headline.length()));
     }
 
+    public static void printTaskRow(int rowIndex, Task currentTask) {
+      String taskRow = output.addWhiteSpace((rowIndex+1) + ".", 3) + "| " +
+              output.addWhiteSpace((currentTask.isDone ? "Yes" : "No"), output.maxIsDone) + "| " +
+              output.addWhiteSpace(output.getTime(currentTask.hour,currentTask.minute), output.maxTime) + "| " +
+              output.addWhiteSpace( ((!currentTask.title.isEmpty()) ? currentTask.title : "-"), output.maxTitle) + "| " +
+              output.addWhiteSpace( ((!currentTask.description.isEmpty()) ? currentTask.description : "-"), output.maxDescription);
+      System.out.println(taskRow);
+    }
     public static String getTime(int hour, int minute){
       return String.format("%02d", hour) + ":" + String.format("%02d", minute);
     }
@@ -68,14 +67,6 @@ public class Task {
        return " ".repeat(40) + " No Task ";
     }
 
-    public static ArrayList<Task> sortList(ArrayList<Task> taskList){
-      // Define a custom comparator based on the 'value' field
-      Comparator<Task> comparator = Comparator.comparing(Task::getTitle);
-      // Sort the ArrayList using the custom comparator
-      taskList.sort(comparator);
-
-      return taskList;
-    }
   }
 
 }

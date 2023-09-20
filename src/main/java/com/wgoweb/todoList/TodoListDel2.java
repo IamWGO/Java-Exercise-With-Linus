@@ -50,7 +50,7 @@ public class TodoListDel2 {
       System.out.println(Task.output.emptyRecord());
     } else {
       for (int i = 0; i < taskList.size(); i++) {
-        System.out.println(taskList.get(i).printTaskRow(i));
+        Task.output.printTaskRow(i, taskList.get(i));
       }
     }
   }
@@ -94,15 +94,12 @@ public class TodoListDel2 {
       if(inputString.equalsIgnoreCase("q")){
         break;
       }
-      // check if choice is number
-      try {
-        int choice = Integer.parseInt(inputString);
-        if (choice <= this.taskList.size() && choice > 0){
-          this.taskList.get(choice - 1).setDone();
-        } else {
-          System.out.println(warning);
-        }
-      } catch (NumberFormatException ex) {
+      // return -1 if no record
+      int selectedIndex = searchTaskByIndex(inputString);
+
+      if (selectedIndex >= 0) {
+        this.taskList.get(selectedIndex).setDone();
+      } else {
         System.out.println(warning);
       }
 
@@ -127,8 +124,8 @@ public class TodoListDel2 {
         break;
       }
 
-      int selectedIndex;
-      selectedIndex = searchTaskByIndex(inputString);
+      // return -1 if no record
+      int selectedIndex = searchTaskByIndex(inputString);
 
       if (selectedIndex >= 0) {
         Task selectedTask = taskList.get(selectedIndex);
@@ -169,14 +166,12 @@ public class TodoListDel2 {
         break;
       }
 
-      Task selectedTask;
-      int selectedIndex;
-
       printAllTask();
+      // return -1 if no record
+      int selectedIndex = searchTaskByIndex(inputString);
 
-      selectedIndex = searchTaskByIndex(inputString);
       if (selectedIndex >= 0) {
-        selectedTask = taskList.get(selectedIndex);
+        Task selectedTask = taskList.get(selectedIndex);
         if (isMoveUp){
           if (selectedIndex > 0) {
             taskList.remove(selectedIndex);
@@ -211,17 +206,16 @@ public class TodoListDel2 {
     try {
       int choice = Integer.parseInt(inputString);
       // check if index is in range
-      if (choice < 0 || choice > (taskList.size() + 1)) {
+      if (choice < 0 || choice > (taskList.size())) {
         return  -1;
       }
       // now we get selected task , exit loop
       return choice -1;
 
     } catch (InputMismatchException ex) {
-      return  -2;
+      return  -1;
     }
   }
-
 
   private void removeByIndex(){
     printAllTask();

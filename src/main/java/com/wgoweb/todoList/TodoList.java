@@ -158,7 +158,7 @@ public class TodoList {
       System.out.println(Task.output.emptyRecord());
     } else {
       for (int i = 0; i < taskList.size(); i++) {
-        System.out.println(taskList.get(i).printTaskRow(i));
+        Task.output.printTaskRow(i, taskList.get(i));
       }
     }
 
