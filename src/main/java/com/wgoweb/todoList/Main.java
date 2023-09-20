@@ -4,6 +4,10 @@ import java.util.Scanner;
 
 public class Main {
   public static void main(String[] args) {
+    // if you like to run as menu
+    //mainMenu();
+
+    // TodoListDel2
     TodoListDel2 task = new TodoListDel2();
     task.run();
   }
@@ -15,8 +19,7 @@ public class Main {
       System.out.print("""
               1. Todo list like Linus's Dog school
               2. Exercise Del1
-              3. Exercise Del2
-              4. Exercise Del3
+              3. Exercise Del2 and Del 3
               Q. Exit Program
 
                Select :\s""");
@@ -34,10 +37,6 @@ public class Main {
         }
         case "3" -> {
           TodoListDel2 task = new TodoListDel2();
-          task.run();
-        }
-        case "4" -> {
-          TodoListDel3 task = new TodoListDel3();
           task.run();
         }
         case "Q" -> {

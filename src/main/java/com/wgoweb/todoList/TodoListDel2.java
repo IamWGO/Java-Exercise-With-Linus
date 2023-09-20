@@ -32,6 +32,8 @@ public class TodoListDel2 {
         case "3" -> checkDoneTask();
         case "4" -> moveRecode(true);
         case "5" -> moveRecode(false);
+        case "6" -> moveRecodeOneStep(true);
+        case "7" -> moveRecodeOneStep(false);
         case "Q" -> {
           System.out.println("Exit Del 2 :)");
           run = false; // quit while loop
@@ -56,15 +58,14 @@ public class TodoListDel2 {
   private void removeRecode(){
     boolean run = true;
     while (run) {
-      printAllTask();
-      System.out.print("""
+      System.out.println("""
               
               ::::: REMOVE RECORD MENU ::::
               1. Remove by index
               2. Remove by name
               Q. Go back
-
-               Select :\s""");
+               \s""");
+      System.out.print(" Select Choice : " );
       String inputString = scan.nextLine();
       // use toUpperCase to Q command
       switch (inputString.toUpperCase()) {
@@ -110,83 +111,144 @@ public class TodoListDel2 {
   }
 
   private void moveRecode(boolean isMoveToTop){
+    String guideText = " Input number from 1 - " + taskList.size();
 
-    Task selectedTask = null;
-
-    printAllTask();
-
-    System.out.print("Select Index: ");
-    String searchString = scan.nextLine();
-    String warning = " must be number from 1 - " + taskList.size();
-    //
     while (true) {
-      try {
-        int index = Integer.parseInt(searchString);
-        // check if index is in range
-        if (index < 0 || index > (taskList.size() + 1)) {
-          System.out.println(warning);
-          scan.next();
-          break;
-        }
-        // now we get selected task , exit loop
-        selectedTask = taskList.get(index - 1);
-        break;
+      printAllTask();
 
-      } catch (InputMismatchException ex) {
-        System.out.println(warning);
+      System.out.println(
+              "Q - Go back \n" +
+              "Which one do you want to move" + ((isMoveToTop) ? "the top" : "the bottom") + " ? " );
+      System.out.print("Select Index: ");
+      String inputString = scan.nextLine();
+
+      // quit while loop if user type q
+      if(inputString.equalsIgnoreCase("q")){
+        break;
+      }
+
+      int selectedIndex;
+      selectedIndex = searchTaskByIndex(inputString);
+
+      if (selectedIndex >= 0) {
+        Task selectedTask = taskList.get(selectedIndex);
+        if (isMoveToTop){
+          taskList.remove(selectedIndex);
+          taskList.add(0, selectedTask);
+          System.out.print("> Moved "+ selectedTask.getTitle() +" to the top. ");
+        }  else {
+          taskList.remove(selectedIndex);
+          taskList.add(selectedTask);
+          System.out.print("> Moved "+ selectedTask.getTitle() +" to the bottom. ");
+        }
+
+        System.out.println(guideText);
+        printAllTask();
+
+      } else {
+        System.out.println(guideText);
+      }
+
+    }
+  }
+
+  private void moveRecodeOneStep(boolean isMoveUp) {
+    String guideText = " Input number from 1 - " + taskList.size() + " or Q";
+
+    while (true) {
+      printAllTask();
+      System.out.println(
+              "Q - Go back\n" +
+              "Which one do you want to move " + ((isMoveUp) ? "up" : "down") + " ? " );
+      System.out.print("Select Index: ");
+
+      String inputString = scan.nextLine();
+
+      // quit while loop if user type q
+      if(inputString.equalsIgnoreCase("q")){
+        break;
+      }
+
+      Task selectedTask;
+      int selectedIndex;
+
+      printAllTask();
+
+      selectedIndex = searchTaskByIndex(inputString);
+      if (selectedIndex >= 0) {
+        selectedTask = taskList.get(selectedIndex);
+        if (isMoveUp){
+          if (selectedIndex > 0) {
+            taskList.remove(selectedIndex);
+            taskList.add(selectedIndex -1, selectedTask);
+            System.out.println("> Moved "+ selectedTask.getTitle() +" up 1 step. ");
+          } else {
+            System.out.println("> "+ selectedTask.getTitle() +" already in first of the list. ");
+          }
+
+        }  else {
+          if (selectedIndex < (taskList.size() -1)) {
+            taskList.remove(selectedIndex);
+            taskList.add(selectedIndex + 1 ,selectedTask);
+            System.out.println("> Moved "+ selectedTask.getTitle() +" down 1 step. ");
+          } else {
+            System.out.println("> "+ selectedTask.getTitle() +" already in last of the list. ");
+          }
+        }
+
+        // Print current task list
+        System.out.println(guideText);
+        printAllTask();
+
+      } else {
+        System.out.println(guideText);
         scan.next();
       }
     }
+  }
 
-    // copy taskList to tempList except selectedTask
-    if (selectedTask != null) {
-      ArrayList<Task> tempList  = new ArrayList<>();
-      // move to top //
-      for (int i = 0; i < taskList.size() -1; i++) {
-        if (!taskList.get(i).equals(selectedTask)) {
-          tempList.add(taskList.get(i));
-        }
+  private int searchTaskByIndex(String inputString){
+    try {
+      int choice = Integer.parseInt(inputString);
+      // check if index is in range
+      if (choice < 0 || choice > (taskList.size() + 1)) {
+        return  -1;
       }
+      // now we get selected task , exit loop
+      return choice -1;
 
-      // Move recode to top/bottom
-      if (isMoveToTop){
-        tempList.add(0, selectedTask);
-        System.out.print("> Moved "+ selectedTask.getTitle() +" to the top. ");
-      }  else {
-        tempList.add(selectedTask);
-        System.out.print("> Moved "+ selectedTask.getTitle() +" to the bottom. ");
-      }
-
-      taskList = tempList;
+    } catch (InputMismatchException ex) {
+      return  -2;
     }
-
-    printAllTask();
-
   }
 
 
   private void removeByIndex(){
-    System.out.print("Remove Index: ");
+    printAllTask();
+    System.out.print("Which one do you want to move ? \n" +
+            "Select Index:");
     String searchString = scan.nextLine();
-    String warning = " must be number from 1 - " + taskList.size();
+    String guideText = " Input number from 1 - " + taskList.size() + " or Q";
 
     while (true) {
       try {
         int index = Integer.parseInt(searchString);
         // check if index is in range
         if (index < 0 || index > (taskList.size() + 1)) {
-          System.out.println(warning);
+          System.out.println(guideText);
           scan.next();
           break;
         }
-
-        System.out.println(" :: Record "+ taskList.get(index).getTitle() +" is removed :: ");
+        String removingTitle = taskList.get(index).getTitle();
         // remove record
         taskList.remove(index - 1);
+        printAllTask();
+        System.out.println(" :: Record "+ removingTitle +" is removed :: ");
+
         break;
 
       } catch (InputMismatchException ex) {
-        System.out.println(warning);
+        System.out.println(guideText);
         scan.next();
       }
     }
@@ -194,8 +256,11 @@ public class TodoListDel2 {
   }
 
   private void removeByTitle(){
-    System.out.print("Remove Title: ");
+    printAllTask();
+    System.out.print("Which title do you want to remove? (ex: Do Homework , you could put only 'homework')\n" +
+            "Input title:");
     String searchString = scan.nextLine();
+
     boolean isDelete = false;
 
     for (int i = 0; i < taskList.size(); i++) {
@@ -203,10 +268,12 @@ public class TodoListDel2 {
       boolean isContain = taskList.get(i).getTitle().toUpperCase().contains(searchString.toUpperCase());
 
       if (isContain) {
-        System.out.println("Info: Record \""+ taskList.get(i).getTitle() +"\" is removed");
-        // remove record
+        String removingTitle = taskList.get(i).getTitle();
+         // remove record
         taskList.remove(i);
+        printAllTask();
         isDelete = true;
+        System.out.println(" :: Record "+ removingTitle +" is removed :: ");
         break; // Stop searching once found
       }
     }
@@ -214,9 +281,6 @@ public class TodoListDel2 {
     if (!isDelete) System.out.println("Waring: No \""+ searchString+"\" in Task List !");
 
   }
-
-
-
 
   private void getTaskFromFile(){
     String filename = "src/main/java/com/wgoweb/todoList/TodoListContent.txt";
@@ -296,9 +360,12 @@ public class TodoListDel2 {
               3. Check done task
               4. Move recode to the top
               5. Move recode to the bottom
+              6. Move 1 step up
+              7. Move 1 step down
               
               Q. Avsluta programmet
              Select :\s""");
   }
 
 }
+
