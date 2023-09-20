@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class TodoList {
+/*
+* TodoList with dog school logic
+* */
+public class SampleTodoList {
   Scanner scan = new Scanner(System.in);
 
   ArrayList<Task> taskList  = new ArrayList<>();

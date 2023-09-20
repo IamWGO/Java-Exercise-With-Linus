@@ -29,7 +29,7 @@ public class TodoListDel1 {
     while (run) {
       printMenu();
       String choice = scan.next();
-      System.out.println();
+
       // toUpperCase to check Q command
       switch (choice.toUpperCase()) {
         case "1" -> printAllTask();
@@ -46,7 +46,7 @@ public class TodoListDel1 {
   }
 
   private void newTask(){
-    System.out.println(":::::: New Task ::::::");
+    System.out.println(":::::: NEW TASK ::::::");
     // Clear value
     String title = "";
     String description = "";
