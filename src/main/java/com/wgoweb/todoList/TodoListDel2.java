@@ -24,7 +24,7 @@ public class TodoListDel2 {
     while (run) {
       printMenu();
       String choice = scan.nextLine();
-      System.out.println();
+      printLine("");
       // toUpperCase to check Q command
       switch (choice.toUpperCase()) {
         case "1" -> printAllTask();
@@ -35,10 +35,10 @@ public class TodoListDel2 {
         case "6" -> moveRecodeOneStep(true);
         case "7" -> moveRecodeOneStep(false);
         case "Q" -> {
-          System.out.println("Exit Del 2 :)");
+          printLine("Exit Del 2 :)");
           run = false; // quit while loop
         }
-        default -> System.out.println("Input number 1-4 or Q to exit program");
+        default -> printLine("Input number 1-4 or Q to exit program");
       }
     }
   }
@@ -47,49 +47,51 @@ public class TodoListDel2 {
   private void printAllTask(){
     Task.output.printHeadLine();
     if (taskList.isEmpty()) {
-      System.out.println(Task.output.emptyRecord());
+      printLine(Task.output.emptyRecord());
     } else {
       for (int i = 0; i < taskList.size(); i++) {
         Task.output.printTaskRow(i, taskList.get(i));
       }
-      System.out.println();
+      printLine("");
     }
   }
 
   private void removeRecode(){
     boolean run = true;
     while (run) {
-      System.out.println("""
+      printLine("""
               
               ::::: REMOVE RECORD MENU ::::
               1. Remove by index
               2. Remove by name
               Q. Go back
                \s""");
-      System.out.print(" Select Choice : " );
+      print(" Select Choice : " );
       String inputString = scan.nextLine();
       // use toUpperCase to Q command
       switch (inputString.toUpperCase()) {
         case "1" -> removeByIndex();
         case "2" -> removeByTitle();
         case "Q" -> run = false; // exit while loop
-        default -> System.out.println("Input number 1, 2 or Q.");
+        default -> printLine("Input number 1, 2 or Q.");
       }
     }
 
   }
 
   private void checkDoneTask(){
-    String warning = "Select number 1-"+ taskList.size() +" or Q.";
-    System.out.println("::::: DONE TASK ::::");
+    String warning = "Select number 1-"+ taskList.size() +".";
+    printLine("::::: DONE TASK ::::");
     while (true) {
       printAllTask();
       // quit while loop if it has no task
       if (taskList.isEmpty()) break;
 
-      System.out.println( "Which one do you want to change status ? " );
+      printLine(
+              "Q - Go back\n" +
+              "Which one do you want to change status ? " );
 
-      System.out.print("Select index : ");
+      print("Select index : ");
       String inputString = scan.nextLine();
 
       // quit while loop if user type q
@@ -102,7 +104,7 @@ public class TodoListDel2 {
       if (selectedIndex >= 0) {
         this.taskList.get(selectedIndex).setDone();
       } else {
-        System.out.println(warning);
+        printLine(warning);
       }
 
     }
@@ -115,10 +117,10 @@ public class TodoListDel2 {
     while (true) {
       printAllTask();
 
-      System.out.println(
+      printLine(
               "Q - Go back \n" +
               "Which one do you want to move" + ((isMoveToTop) ? "the top" : "the bottom") + " ? " );
-      System.out.print("Select Index: ");
+      print("Select Index: ");
       String inputString = scan.nextLine();
 
       // quit while loop if user type q
@@ -130,45 +132,45 @@ public class TodoListDel2 {
       int selectedIndex = searchTaskByIndex(inputString);
 
       if (selectedIndex == -1) {
-        System.out.println("Not found recode !!");
-        System.out.println(guideText);
+        printLine("Not found recode !!");
+        printLine(guideText);
         continue;
       }
 
       Task selectedTask = taskList.get(selectedIndex);
       if (isMoveToTop){
         if (selectedIndex == 0) {
-          System.out.println("> \""+ selectedTask.getTitle() +"\" already in the top. ");
+          printLine("> \""+ selectedTask.getTitle() +"\" already in the top. ");
           continue;
         }
 
         taskList.remove(selectedIndex);
         taskList.add(0, selectedTask);
-        System.out.println("> Moved \""+ selectedTask.getTitle() +"\" to the top. ");
+        printLine("> Moved \""+ selectedTask.getTitle() +"\" to the top. ");
 
       }  else {
         if (selectedIndex == taskList.size()-1) {
-          System.out.println("> \""+ selectedTask.getTitle() +"\" already in the bottom. ");
+          printLine("> \""+ selectedTask.getTitle() +"\" already in the bottom. ");
           continue;
         }
 
         taskList.remove(selectedIndex);
         taskList.add(selectedTask);
-        System.out.println("> Moved "+ selectedTask.getTitle() +" to the bottom. ");
+        printLine("> Moved \""+ selectedTask.getTitle() +"\" to the bottom. ");
       }
 
     }
   }
 
   private void moveRecodeOneStep(boolean isMoveUp) {
-    String guideText = " Input number from 1 - " + taskList.size() + " or Q";
+    String guideText = " Input number from 1 - " + taskList.size();
 
     while (true) {
       printAllTask();
-      System.out.println(
+      printLine(
               "Q - Go back\n" +
               "Which one do you want to move " + ((isMoveUp) ? "up" : "down") + " ? " );
-      System.out.print("Select Index: ");
+      print("Select Index: ");
 
       String inputString = scan.nextLine();
 
@@ -181,8 +183,8 @@ public class TodoListDel2 {
       int selectedIndex = searchTaskByIndex(inputString);
 
       if (selectedIndex == -1){
-        System.out.println("Not found recode !!");
-        System.out.println(guideText);
+        printLine("Not found recode !!");
+        printLine(guideText);
         scan.next();
         continue;
       }
@@ -190,23 +192,23 @@ public class TodoListDel2 {
       Task selectedTask = taskList.get(selectedIndex);
       if (isMoveUp){
         if (selectedIndex == 0) {
-          System.out.println("> \""+ selectedTask.getTitle() +"\" already in first of the list. ");
+          printLine("> \""+ selectedTask.getTitle() +"\" already in first of the list. ");
           continue;
         }
 
         taskList.remove(selectedIndex);
         taskList.add(selectedIndex -1, selectedTask);
-        System.out.println("> Moved \""+ selectedTask.getTitle() +"\" up 1 step. ");
+        printLine("> Moved \""+ selectedTask.getTitle() +"\" up 1 step. ");
 
       }  else {
         if (selectedIndex == (taskList.size() -1)) {
-          System.out.println("> \""+ selectedTask.getTitle() +"\" already in last of the list. ");
+          printLine("> \""+ selectedTask.getTitle() +"\" already in last of the list. ");
           continue;
         }
 
         taskList.remove(selectedIndex);
         taskList.add(selectedIndex + 1 ,selectedTask);
-        System.out.println("> Moved \""+ selectedTask.getTitle() +"\" down 1 step. ");
+        printLine("> Moved \""+ selectedTask.getTitle() +"\" down 1 step. ");
       }
     }
   }
@@ -228,8 +230,10 @@ public class TodoListDel2 {
 
   private void removeByIndex(){
     printAllTask();
-    System.out.print("Which one do you want to move ? \n" +
-            "Select Index:");
+
+    printLine("Q - Go back\n" +
+            "Which one do you want to move ?");
+    print("Select Index: ");
     String searchString = scan.nextLine();
     String guideText = " Input number from 1 - " + taskList.size() + " or Q";
 
@@ -238,7 +242,7 @@ public class TodoListDel2 {
         int index = Integer.parseInt(searchString);
         // check if index is in range
         if (index < 0 || index > (taskList.size() + 1)) {
-          System.out.println(guideText);
+          printLine(guideText);
           scan.next();
           break;
         }
@@ -246,12 +250,12 @@ public class TodoListDel2 {
         // remove record
         taskList.remove(index - 1);
         printAllTask();
-        System.out.println(" :: Record \""+ removingTitle +"\" is removed :: ");
+        printLine(" :: Record \""+ removingTitle +"\" is removed :: ");
 
         break;
 
       } catch (InputMismatchException ex) {
-        System.out.println(guideText);
+        printLine(guideText);
         scan.next();
       }
     }
@@ -260,8 +264,9 @@ public class TodoListDel2 {
 
   private void removeByTitle(){
     printAllTask();
-    System.out.print("Which title do you want to remove? (ex: Do Homework , you could put only 'homework')\n" +
-            "Input title:");
+    printLine("Q - Go back\n" +
+            "Which title do you want to remove? (ex: Do Homework , you could put only 'homework')");
+    print("Input title: ");
     String searchString = scan.nextLine();
 
     boolean isDelete = false;
@@ -276,12 +281,12 @@ public class TodoListDel2 {
         taskList.remove(i);
         printAllTask();
         isDelete = true;
-        System.out.println(" :: Record \""+ removingTitle +"\" is removed :: ");
+        printLine(" :: Record \""+ removingTitle +"\" is removed :: ");
         break; // Stop searching once found
       }
     }
 
-    if (!isDelete) System.out.println("Waring: No \""+ searchString+"\" in Task List !");
+    if (!isDelete) printLine("Waring: No \""+ searchString+"\" in Task List !");
 
   }
 
@@ -295,7 +300,7 @@ public class TodoListDel2 {
         FileWriter writer = new FileWriter(file);
         writer.write(getFirstContent());
         writer.close();
-        System.out.println("Content written to the file.");
+        printLine("Content written to the file.");
       } else {
         //"File already exists."
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))){
@@ -305,13 +310,13 @@ public class TodoListDel2 {
             saveTodoList(inputLine);
           }
         } catch(IOException ex) {
-          System.out.println("Error - " + ex.getMessage());
+          printLine("Error - " + ex.getMessage());
         } catch(Exception ex) {
-          System.out.println("Error processing file - " + ex.getMessage());
+          printLine("Error processing file - " + ex.getMessage());
         }
       }
     } catch (IOException ex) {
-      System.out.println("An error occurred." + ex);
+      printLine("An error occurred." + ex);
     }
 
   }
@@ -336,9 +341,9 @@ public class TodoListDel2 {
       taskList.add(newTask);
 
     } catch (NumberFormatException ex) {
-      System.out.println(parts[0] + " > Invalid format" + ex);
+      printLine(parts[0] + " > Invalid format" + ex);
     } catch (IllegalStateException ex) {
-      System.out.println("Invalid input string. Expected 8 fields." + ex);
+      printLine("Invalid input string. Expected 8 fields." + ex);
     }
   }
 
@@ -354,10 +359,9 @@ public class TodoListDel2 {
             ;
   }
   void printMenu(){
-    System.out.print("""
+    print("""
 
-             Todo List - Menu
-             -------------------------
+             ::::: TODO LIST MENU ::::
               1. All records
               2. Remove record
               3. Check done task
@@ -368,6 +372,14 @@ public class TodoListDel2 {
               
               Q. Avsluta programmet
              Select :\s""");
+  }
+
+  private void printLine(String content) {
+    System.out.println(content);
+  }
+
+  private void print(String content) {
+    System.out.print(content);
   }
 
 }
