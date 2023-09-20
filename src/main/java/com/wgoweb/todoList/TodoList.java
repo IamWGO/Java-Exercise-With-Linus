@@ -15,6 +15,7 @@ public class TodoList {
     while (run) {
       printMenu();
       String choice = scan.next();
+      System.out.println();
       // toUpperCase to check Q command
       switch (choice.toUpperCase()) {
         case "1" -> printAllTask();
@@ -41,7 +42,7 @@ public class TodoList {
 
     boolean run = true;
     while (run) {
-      System.out.print("Registrera Hund" +
+      System.out.print("<< Add a new task >>" +
               "\n1. title - " + title +
               "\n2. description - " + description +
               "\n3. Time - " + Task.output.getTime(hour, minute) +
@@ -68,6 +69,7 @@ public class TodoList {
           // add to list
           Task newTask = new Task(title, description, hour, minute, isDone);
           taskList.add(newTask);
+          System.out.println(":::::: "+ title +" saved ::::::");
           // clear value after add to list
           title = "";
           description = "";
@@ -151,9 +153,7 @@ public class TodoList {
   }
 
   private void printAllTask(){
-    System.out.println();
     Task.output.printHeadLine();
-
     if (taskList.isEmpty()) {
       System.out.println(Task.output.emptyRecord());
     } else {

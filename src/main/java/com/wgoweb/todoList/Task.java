@@ -1,6 +1,10 @@
 package com.wgoweb.todoList;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 public class Task {
   String title;
   String description;
@@ -24,6 +28,11 @@ public class Task {
   public void updateStatus() {
     this.isDone = !this.isDone;
   }
+
+  public String getTitle() {
+    return title;
+  }
+
 
   public String printTaskRow(int rowIndex) {
     return output.addWhiteSpace((rowIndex+1) + ".", 3) + "| " +
@@ -59,5 +68,18 @@ public class Task {
     public static String emptyRecord() {
        return " ".repeat(40) + " No Task ";
     }
+
+    public static ArrayList<Task> sortList(ArrayList<Task> taskList){
+      // Define a custom comparator based on the 'value' field
+      Comparator<Task> comparator = Comparator.comparing(Task::getTitle);
+      // Sort the ArrayList using the custom comparator
+      taskList.sort(comparator);
+
+      return taskList;
+    }
   }
+
 }
+
+
+
