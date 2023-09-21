@@ -27,6 +27,17 @@ public class Dog {
     this.isHere = !this.isHere;
   }
 
+  public String objectToLineFormat(){
+    return this.name + "," +
+                this.birthDate + "," +
+                this.race + "," +
+                this.color + "," +
+                this.owner + "," +
+                this.specialNeeds + "," +
+                this.weight + "," +
+                this.bark;
+  }
+
   static class Output {
     static int maxName = 15;
     static int maxBirthYear = 5;

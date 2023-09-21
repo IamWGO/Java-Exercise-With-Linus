@@ -1,14 +1,11 @@
 package com.wgoweb.arrayListHunddagis;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DogCareService {
-
+  String filename = "src/main/java/com/wgoweb/arrayListHunddagis/DogMember.text";
   ArrayList<Dog> dogList = new ArrayList<>();
-
-
 
   public void menu() {
     dogList = getDogMembers();
@@ -110,6 +107,9 @@ public class DogCareService {
 
   private void addDogToDaycare(Dog newDog) {
     this.dogList.add(newDog);
+    // save to file
+    String lineFormat = newDog.objectToLineFormat();
+    addLineToTextFile(lineFormat);
   }
 
   private void pickADogToRemoveFromList() {
@@ -182,7 +182,7 @@ public class DogCareService {
 
   private  ArrayList<Dog> getDogMembers(){
     ArrayList<Dog> dogs = new ArrayList<>();
-    String filename = "src/main/java/com/wgoweb/arrayListHunddagis/DogMember.text";
+
     try (Scanner contentLines  = new Scanner(new File(filename))) {
 
       while (contentLines.hasNextLine()) {
@@ -211,6 +211,35 @@ public class DogCareService {
       System.out.println("File not found " + ex);
     }
     return dogs;
+  }
+
+  /*
+  Both FileOutputStream and FileWriter can be used to write to a text file in Java,
+   but FileWriter is specifically designed for writing character data to text files,
+   so it's generally a better choice for working with text files.
+   It abstracts away some of the lower-level details, such as character encoding,
+   making it easier to work with text.
+  * Simplicity: FileWriter provides a higher-level, more user-friendly API for working with text,
+  while FileOutputStream is a lower-level byte stream that requires additional steps for encoding text properly.
+  * */
+  private void addLineToTextFile(String inputLine){
+    try {
+      // Create a FileWriter in append mode (true as the second argument)
+      FileWriter fileWriter = new FileWriter(filename, true);
+
+      // Create a BufferedWriter for efficient writing
+      BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+      // Write the new line to the file
+      bufferedWriter.write(inputLine);
+      bufferedWriter.newLine(); // Add a newline character
+
+      // Close the BufferedWriter and FileWriter
+      bufferedWriter.close();
+      fileWriter.close();
+    } catch (IOException e) {
+      System.out.println("An error occurred while adding a line to the file.");
+    }
   }
 
   public void printMenu(){
