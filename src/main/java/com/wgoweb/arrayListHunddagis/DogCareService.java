@@ -222,6 +222,7 @@ public class DogCareService {
   * Simplicity: FileWriter provides a higher-level, more user-friendly API for working with text,
   while FileOutputStream is a lower-level byte stream that requires additional steps for encoding text properly.
   * */
+  // BufferedWriter doesn't need \n
   private void addLineToTextFile(String inputLine){
     try {
       // Create a FileWriter in append mode (true as the second argument)
