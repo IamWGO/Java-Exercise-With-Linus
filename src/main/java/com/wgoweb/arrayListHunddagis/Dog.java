@@ -27,7 +27,7 @@ public class Dog {
     this.isHere = !this.isHere;
   }
 
-  static class output {
+  static class Output {
     static int maxName = 15;
     static int maxBirthYear = 5;
     static int maxBreed = 20;
@@ -60,16 +60,16 @@ public class Dog {
 
     public static void  printDogRow(int rowIndex, Dog dog) {
       String row =
-              output.addWhiteSpace((rowIndex + 1) + ".", 5) +
-                      output.addWhiteSpace( ((!dog.name.isEmpty()) ? dog.name : "-"), output.maxName)  + "| " +
-                      output.addWhiteSpace(((dog.birthDate > 1000) ? String.valueOf(dog.birthDate) : "-"), output.maxBirthYear)  + "| " +
-                      output.addWhiteSpace(((!dog.race.isEmpty()) ? dog.race : "-"), output.maxBreed)  + "| " +
-                      output.addWhiteSpace(((!dog.color.isEmpty()) ? dog.color : "-"), output.maxColor)  + "| " +
-                      output.addWhiteSpace(((!dog.owner.isEmpty()) ? dog.owner : "-"), output.maxOwner)   + "| " +
-                      output.addWhiteSpace( (dog.specialNeeds ? "Yes" : "No"), output.maxSpecialNeeds)   + "| " +
-                      output.addWhiteSpace(dog.weight + "kg.", output.maxWeight)  + "| " +
-                      output.addWhiteSpace(((!dog.bark.isEmpty()) ? dog.bark : "-"), output.maxBark)+ "| " +
-                      output.addWhiteSpace( (dog.isHere ? "checked" : "-"), output.maxSpecialNeeds);
+              Output.addWhiteSpace((rowIndex + 1) + ".", 5) +
+                      Output.addWhiteSpace( ((!dog.name.isEmpty()) ? dog.name : "-"), Output.maxName)  + "| " +
+                      Output.addWhiteSpace(((dog.birthDate > 1000) ? String.valueOf(dog.birthDate) : "-"), Output.maxBirthYear)  + "| " +
+                      Output.addWhiteSpace(((!dog.race.isEmpty()) ? dog.race : "-"), Output.maxBreed)  + "| " +
+                      Output.addWhiteSpace(((!dog.color.isEmpty()) ? dog.color : "-"), Output.maxColor)  + "| " +
+                      Output.addWhiteSpace(((!dog.owner.isEmpty()) ? dog.owner : "-"), Output.maxOwner)   + "| " +
+                      Output.addWhiteSpace( (dog.specialNeeds ? "Yes" : "No"), Output.maxSpecialNeeds)   + "| " +
+                      Output.addWhiteSpace(dog.weight + "kg.", Output.maxWeight)  + "| " +
+                      Output.addWhiteSpace(((!dog.bark.isEmpty()) ? dog.bark : "-"), Output.maxBark)+ "| " +
+                      Output.addWhiteSpace( (dog.isHere ? "checked" : "-"), Output.maxSpecialNeeds);
 
       System.out.println(row);
     }

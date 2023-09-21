@@ -8,12 +8,10 @@ public class DogCareService {
 
   ArrayList<Dog> dogList = new ArrayList<>();
 
-  public void run(){
-    dogList = getDogMembers();
-    menu();
-  }
+
 
   public void menu() {
+    dogList = getDogMembers();
     Scanner scan = new Scanner(System.in);
     boolean run = true;
     while (run) {
@@ -35,9 +33,9 @@ public class DogCareService {
   }
 
   private void printAllDogs(){
-    Dog.output.printHeadLine();
+    Dog.Output.printHeadLine();
     for (int i = 0; i < dogList.size(); i++) {
-      Dog.output.printDogRow(i, dogList.get(i));
+      Dog.Output.printDogRow(i, dogList.get(i));
     }
   }
 
