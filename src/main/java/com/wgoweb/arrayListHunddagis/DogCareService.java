@@ -131,11 +131,14 @@ public class DogCareService {
       if(inputString.equalsIgnoreCase("q")){
         break;
       }
+       // How we fine exception
+      // : check error info "NumberFormatException"
+      //int choice1 = Integer.parseInt(inputString);
 
       try {
         int choice = Integer.parseInt(inputString);
         if (choice <= this.dogList.size() && choice > 0){
-          removeDogFromList(choice - 1);
+          dogList.remove(choice - 1);
         } else {
           System.out.println("Du måste välja 1 - " + this.dogList.size() + " eller Q!");
         }
@@ -212,13 +215,6 @@ public class DogCareService {
     return dogs;
   }
 
-
-  public void removeDogFromList(int removeDogIndex){
-    dogList.remove(removeDogIndex);
-  }
-
-
-
   public void printMenu(){
     System.out.println("""
 
@@ -231,7 +227,4 @@ public class DogCareService {
 
               Val:\s""");
   }
-
-
-
 }
