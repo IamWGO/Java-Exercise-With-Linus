@@ -37,7 +37,7 @@ public class DogCareService {
   private void printAllDogs(){
     Dog.output.printHeadLine();
     for (int i = 0; i < dogList.size(); i++) {
-      System.out.println(dogList.get(i).printDogRow(i));
+      Dog.output.printDogRow(i, dogList.get(i));
     }
   }
 
@@ -69,7 +69,7 @@ public class DogCareService {
               "\n\n Val -");
       String choice = scan.nextLine();
 
-      switch (choice) {
+      switch (choice.toUpperCase()) {
         case "1" -> {
           System.out.println("Name: ");
           name = scan.nextLine();
@@ -171,7 +171,7 @@ public class DogCareService {
       try {
         int choice = Integer.parseInt(inputString);
         if (choice <= this.dogList.size() && choice > 0){
-          this.dogList.get(choice - 1).checkInCheckOut();
+          this.dogList.get(choice - 1).setIsHere();
         } else {
           System.out.println("Du måste välja 1 - " + this.dogList.size() + " eller Q!");
         }
