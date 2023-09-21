@@ -43,8 +43,8 @@ public class TodoListExercise {
       printMenu();
       String choice = scan.nextLine();
       System.out.println();
-      // toUpperCase to check Q command
 
+      // toUpperCase to check Q command
       switch (choice.toUpperCase()) {
         case "1" -> printAllTask();
         case "2" -> newTask();
@@ -62,6 +62,7 @@ public class TodoListExercise {
         }
         default -> System.out.println("Input number 1-4 or Q to exit program");
       }
+
     }
   }
 
@@ -180,7 +181,7 @@ public class TodoListExercise {
   }
 
   private void checkDoneTask(){
-    String warning = "Select number 1-"+ taskList.size() +".";
+    String guideText = "Select number 1-"+ taskList.size() +".";
     System.out.println("::::: CHECK DONE TASK ::::");
     while (true) {
       printAllTask();
@@ -204,11 +205,10 @@ public class TodoListExercise {
       if (selectedIndex >= 0) {
         this.taskList.get(selectedIndex).setDone();
       } else {
-        System.out.println(warning);
+        System.out.println(guideText);
       }
 
     }
-
   }
 
   private void moveRecode(boolean isMoveToTop){
@@ -300,7 +300,8 @@ public class TodoListExercise {
         taskList.add(selectedIndex -1, selectedTask);
         System.out.println("> Moved \""+ selectedTask.getTitle() +"\" up 1 step. ");
 
-      }  else {
+      }
+      if (!isMoveUp){
         if (selectedIndex == (taskList.size() -1)) {
           System.out.println("> \""+ selectedTask.getTitle() +"\" already in last of the list. ");
           continue;
@@ -329,26 +330,35 @@ public class TodoListExercise {
   }
 
   private void removeByIndex(){
-    printAllTask();
-
-    System.out.println("Q - Go back\n" +
-            "Which one do you want to move ?");
-    System.out.print("Select Index: ");
-    String searchString = scan.nextLine();
-    String guideText = " Input number from 1 - " + taskList.size() + " or Q";
+    String guideText = " Input number from 1 - " + taskList.size() + ".";
 
     while (true) {
       try {
-        int index = Integer.parseInt(searchString);
-        // check if index is in range
-        if (index < 0 || index > (taskList.size() + 1)) {
-          System.out.println(guideText);
-          scan.next();
+        printAllTask();
+        System.out.println("Q - Go back\n" +
+                "Which one do you want to remove ?");
+        System.out.print("Select Index: ");
+
+        String inputString = scan.nextLine();
+
+        // quit while loop if user type q
+        if(inputString.equalsIgnoreCase("q")){
           break;
         }
-        String removingTitle = taskList.get(index).getTitle();
+
+        // return -1 if no record
+        int selectedIndex = searchTaskByIndex(inputString);
+
+        if (selectedIndex == -1){
+          System.out.println("Not found recode !!");
+          System.out.println(guideText);
+          scan.next();
+          continue;
+        }
+
+        String removingTitle = taskList.get(selectedIndex).getTitle();
         // remove record
-        taskList.remove(index - 1);
+        taskList.remove(selectedIndex);
         printAllTask();
         System.out.println(" :: Record \""+ removingTitle +"\" is removed :: ");
 
@@ -403,17 +413,12 @@ public class TodoListExercise {
         System.out.println("Content written to the file.");
       } else {
         //"File already exists."
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))){
-          String inputLine;
-          while((inputLine = reader.readLine()) != null) {
-            // save to TaskList
-            saveTodoList(inputLine);
-          }
-        } catch(IOException ex) {
-          System.out.println("Error - " + ex.getMessage());
-        } catch(Exception ex) {
-          System.out.println("Error processing file - " + ex.getMessage());
-        }
+        // Style 1 * not recommend
+        //readWithFileInputStream(filename);
+        // style 2
+        //readWithScanner(filename);
+        // Style 3
+        readWithBufferedReader(filename);
       }
     } catch (IOException ex) {
       System.out.println("An error occurred." + ex);
@@ -515,9 +520,66 @@ public class TodoListExercise {
              Select :\s""");
   }
 
- 
 
- 
+
+  // #Style 1 Use Scanner ----
+  // #Use Scanner when you need to read and parse various types of data from a file.
+  private void readWithScanner(String filename){
+    try(Scanner contentLines  = new Scanner(new File(filename))) {
+      while (contentLines.hasNextLine()) {
+        String inputLine = contentLines.nextLine();
+        // save to TaskList
+        saveTodoList(inputLine);
+      }
+    } catch (FileNotFoundException ex) {
+      System.out.println("File not found " + ex);
+    }
+  }
+
+  // # Style 2 Use BufferedReader ----
+  // # Use BufferedReader for efficiently reading text data from a file.
+  private void readWithBufferedReader(String filename){
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(filename))){
+      String inputLine;
+      while((inputLine = reader.readLine()) != null) {
+        // save to TaskList
+        saveTodoList(inputLine);
+      }
+    } catch(IOException ex) {
+      System.out.println("Error - " + ex.getMessage());
+    } catch(Exception ex) {
+      System.out.println("Error processing file - " + ex.getMessage());
+    }
+  }
+
+
+  //# Style 3.Use FileOutputStream for writing binary data to a file.
+  //# This class is used for writing binary data to a file.
+  // If your goal is to write data to a file, you would use FileOutputStream.
+  // It's not meant for reading files.
+  // *** Just show how to get content ,but I am not recommend it good for media file ex. image, mp3, ...
+  private void readWithFileInputStream(String filename){
+
+    try (FileInputStream fis = new FileInputStream(filename)) {
+      int byteRead;
+      String fileContent = "";
+      while ((byteRead = fis.read()) != -1) {
+        // Convert the byte to a char and append it to the StringBuilder
+        assert false;
+        fileContent = fileContent.concat(String.valueOf((char) byteRead));
+
+      }
+      String[] inputLines = fileContent.split("\n");
+      for (String inputLine : inputLines) {
+        saveTodoList(inputLine);
+      }
+
+    } catch (ArrayIndexOutOfBoundsException e) {
+      System.out.println("Error - " +  e);
+    } catch (IOException ex) {
+      System.out.println("Error - " + ex.getMessage());
+    }
+  }
 
 }
-
