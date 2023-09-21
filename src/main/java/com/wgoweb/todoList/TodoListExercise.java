@@ -33,7 +33,7 @@ Del 3
 public class TodoListExercise {
   Scanner scan = new Scanner(System.in);
   ArrayList<Task> taskList  = new ArrayList<>();
-
+  String filename = "src/main/java/com/wgoweb/todoList/TodoListContent.txt";
   public void run() {
     // GET CONTENT FROM FILE
     getTaskFromFile();
@@ -49,8 +49,8 @@ public class TodoListExercise {
         case "1" -> printAllTask();
         case "2" -> newTask();
         case "3" -> checkDoneTask();
-        case "4" -> moveRecode(true);
-        case "5" -> moveRecode(false);
+        case "4" -> moveRecodeToTopOrBottom(true);
+        case "5" -> moveRecodeToTopOrBottom(false);
         case "6" -> moveRecodeOneStep(true);
         case "7" -> moveRecodeOneStep(false);
         case "8" -> removeRecodeWithFilter();
@@ -117,7 +117,13 @@ public class TodoListExercise {
           // add to list
           Task newTask = new Task(title, description, hour, minute, isDone);
           taskList.add(newTask);
+
+          // save task to textFile
+          String inputLine = newTask.objectToLineFormat();
+          addLineToTextFile(inputLine);
+
           System.out.println("> \""+ title +"\" saved !! ");
+
           // clear value after add to list
           title = "";
           description = "";
@@ -132,54 +138,6 @@ public class TodoListExercise {
 
   }
 
-  private void removeRecodeWithFilter(){
-    boolean run = true;
-    while (run) {
-      System.out.println("""
-              
-              ::::: REMOVE RECORD MENU ::::
-              1. Remove by index
-              2. Remove by name
-              Q. Go back
-               \s""");
-      System.out.print(" Select Choice : " );
-      String inputString = scan.nextLine();
-      // use toUpperCase to Q command
-      switch (inputString.toUpperCase()) {
-        case "1" -> removeByIndex();
-        case "2" -> removeByTitle();
-        case "Q" -> run = false; // exit while loop
-        default -> System.out.println("Input number 1, 2 or Q.");
-      }
-    }
-
-  }
-  private void removeFirstOrLast(boolean isFirstList){
-
-    System.out.println(":::::  REMOVE " + ((isFirstList) ? "FIRST" : "LAST") + " ITEM IN THE LIST ::::");
-
-    while (true) {
-      int index = (isFirstList) ? 0 : taskList.size() -1;
-      String removingTitle = taskList.get(index).getTitle();
-      printAllTask();
-      // quit while loop if it has no task
-      if (taskList.isEmpty()) break;
-
-      System.out.print(
-              "Q - Go back\n" +
-              "The " + ((isFirstList) ? "first" : "last") +
-              " item is \""+ removingTitle +"\".\n Input any key to delete : ");
-      String inputString = scan.nextLine();
-
-      // quit while loop if user type q
-      if (inputString.equalsIgnoreCase("q")) {
-        break;
-      }
-      taskList.remove(index);
-      System.out.println("> Record \""+ removingTitle +"\" is removed");
-    }
-  }
-
   private void checkDoneTask(){
     String guideText = "Select number 1-"+ taskList.size() +".";
     System.out.println("::::: CHECK DONE TASK ::::");
@@ -190,7 +148,7 @@ public class TodoListExercise {
 
       System.out.println(
               "Q - Go back\n" +
-              "Which one do you want to change status ? " );
+                      "Which one do you want to change status ? " );
 
       System.out.print("Select index : ");
       String inputString = scan.nextLine();
@@ -211,7 +169,7 @@ public class TodoListExercise {
     }
   }
 
-  private void moveRecode(boolean isMoveToTop){
+  private void moveRecodeToTopOrBottom(boolean isMoveToTop){
     String guideText = " Input number from 1 - " + taskList.size();
     System.out.println("::::: MOVE MOVE TASK TO " + ((isMoveToTop) ? "THE TOP" : "THE BOTTOM") + " ::::");
     while (true) {
@@ -219,7 +177,7 @@ public class TodoListExercise {
 
       System.out.println(
               "Q - Go back \n" +
-              "Which one do you want to move" + ((isMoveToTop) ? "the top" : "the bottom") + " ? " );
+                      "Which one do you want to move" + ((isMoveToTop) ? "the top" : "the bottom") + " ? " );
       System.out.print("Select Index: ");
       String inputString = scan.nextLine();
 
@@ -269,7 +227,7 @@ public class TodoListExercise {
       printAllTask();
       System.out.println(
               "Q - Go back\n" +
-              "Which one do you want to move " + ((isMoveUp) ? "up" : "down") + " ? " );
+                      "Which one do you want to move " + ((isMoveUp) ? "up" : "down") + " ? " );
       System.out.print("Select Index: ");
 
       String inputString = scan.nextLine();
@@ -313,6 +271,58 @@ public class TodoListExercise {
       }
     }
   }
+
+  private void removeRecodeWithFilter(){
+    boolean run = true;
+    while (run) {
+      System.out.println("""
+              
+              ::::: REMOVE RECORD MENU ::::
+              1. Remove by index
+              2. Remove by name
+              Q. Go back
+               \s""");
+      System.out.print(" Select Choice : " );
+      String inputString = scan.nextLine();
+      // use toUpperCase to Q command
+      switch (inputString.toUpperCase()) {
+        case "1" -> removeByIndex();
+        case "2" -> removeByTitle();
+        case "Q" -> run = false; // exit while loop
+        default -> System.out.println("Input number 1, 2 or Q.");
+      }
+    }
+
+  }
+
+  private void removeFirstOrLast(boolean isFirstList){
+
+    System.out.println(":::::  REMOVE " + ((isFirstList) ? "FIRST" : "LAST") + " ITEM IN THE LIST ::::");
+
+    while (true) {
+      int index = (isFirstList) ? 0 : taskList.size() -1;
+      String removingTitle = taskList.get(index).getTitle();
+      printAllTask();
+      // quit while loop if it has no task
+      if (taskList.isEmpty()) break;
+
+      System.out.print(
+              "Q - Go back\n" +
+              "The " + ((isFirstList) ? "first" : "last") +
+              " item is \""+ removingTitle +"\".\n Input any key to delete : ");
+      String inputString = scan.nextLine();
+
+      // quit while loop if user type q
+      if (inputString.equalsIgnoreCase("q")) {
+        break;
+      }
+      taskList.remove(index);
+      System.out.println("> Record \""+ removingTitle +"\" is removed");
+    }
+  }
+
+
+// -----------------------------
 
   private int searchTaskByIndex(String inputString){
     try {
@@ -401,8 +411,6 @@ public class TodoListExercise {
   }
 
   private void getTaskFromFile(){
-    String filename = "src/main/java/com/wgoweb/todoList/TodoListContent.txt";
-
     try {
       File file = new File(filename);
       if (file.createNewFile()) {
@@ -431,10 +439,10 @@ public class TodoListExercise {
     String[] parts = contentLines.split(",");
     try {
       // Extract the values from the split parts and create a Dog object
-      String isDoneFlag = parts[0];
-      String title = parts[1];
-      String description = parts[2];
-      String time = parts[3];
+      String title = parts[0];
+      String description = parts[1];
+      String time = parts[2];
+      String isDoneFlag = parts[3];
 
       boolean isDone = (isDoneFlag.equals("1"));
       // split hour and minute 07:00
@@ -449,6 +457,36 @@ public class TodoListExercise {
       System.out.println(parts[0] + " > Invalid format" + ex);
     } catch (IllegalStateException ex) {
       System.out.println("Invalid input string. Expected 8 fields." + ex);
+    }
+  }
+
+  /*
+  Both FileOutputStream and FileWriter can be used to write to a text file in Java,
+   but FileWriter is specifically designed for writing character data to text files,
+   so it's generally a better choice for working with text files.
+   It abstracts away some of the lower-level details, such as character encoding,
+   making it easier to work with text.
+  * Simplicity: FileWriter provides a higher-level, more user-friendly API for working with text,
+  while FileOutputStream is a lower-level byte stream that requires additional steps for encoding text properly.
+  * */
+  // BufferedWriter doesn't need \n
+  private void addLineToTextFile(String inputLine){
+    try {
+      // Create a FileWriter in append mode (true as the second argument)
+      FileWriter fileWriter = new FileWriter(filename, true);
+
+      // Create a BufferedWriter for efficient writing
+      BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+      // Write the new line to the file
+      bufferedWriter.write(inputLine);
+      bufferedWriter.newLine(); // Add a newline character
+
+      // Close the BufferedWriter and FileWriter
+      bufferedWriter.close();
+      fileWriter.close();
+    } catch (IOException e) {
+      System.out.println("An error occurred while adding a line to the file.");
     }
   }
 
@@ -505,6 +543,7 @@ public class TodoListExercise {
                     """
             ;
   }
+
   void printMenu(){
     System.out.print("""
 
@@ -519,7 +558,6 @@ public class TodoListExercise {
               :::::::::::::::::::::::::::::::::::::::::::::::::::::::
              Select :\s""");
   }
-
 
 
   // #Style 1 Use Scanner ----

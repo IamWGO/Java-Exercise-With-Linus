@@ -27,6 +27,10 @@ public class Task {
     return title;
   }
 
+  public String objectToLineFormat(){
+    return  title + "," + description + "," + hour + ":" + minute + "," + "0";
+  }
+
   // Subclass for output
   public static class output {
 
