@@ -1,0 +1,11 @@
+Paul,Whitehouse,0992 1256347,Voice Designer,Paul.Whitehouse@ubisoft.com
+Sanjay,Pillai,0781 1234567,UX Designer,Sanjay.Pillai@ubisoft.com
+Patrick,Fitzwilliam,0812 1212112,Level Designer,Patrick.Fitzwilliam@ubisoft.com
+Dave,Edmunds,0121 7654312,Junior Game Designer,Dave.Edmunds@ubisoft.com
+Oronzio,D'Errico,0292 4912846,AI Developer,Oronzio.DErrico@ubisoft.com
+Ian,Andersson,0912 1867451,Game Developer,Ian.Andersson@ubisoft.com
+Steve,Wright,0415 4584121,Junior Programmer,Steve.Wright@ubisoft.com
+Jane,Miller,0121 7638297,Junior Programmer,Jane.Miller@ubisoft.com
+Geoff,Proost,0192 1212121,Senior Programmer,Geoff.Proost@ubisoft.com
+Irena,Meshcheryakov,0123 7121232,Senior Game Designer,Irena.Meshcheryakov@ubisoft.com
+Alain,Dupont,0123 8967351,Senior Level Designer,Alain.Dupont@ubisoft.com
