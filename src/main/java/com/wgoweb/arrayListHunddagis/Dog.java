@@ -20,7 +20,7 @@ public class Dog {
     this.owner = owner;
     this.specialNeeds = specialNeeds;
     this.weight = weight;
-    this.bark = bark;
+    this.bark = bark.isEmpty() ? "woff" : bark;
   }
 
   public void setIsHere() {

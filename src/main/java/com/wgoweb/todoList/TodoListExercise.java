@@ -434,9 +434,9 @@ public class TodoListExercise {
 
   }
 
-  private void saveTodoList(String contentLines) {
+  private void saveTodoList(String contentLine) {
     //split contentLine : 0,Exercise,Go for a 30-minute jog in the park,07:00
-    String[] parts = contentLines.split(",");
+    String[] parts = contentLine.split(",");
     try {
       // Extract the values from the split parts and create a Dog object
       String title = parts[0];
