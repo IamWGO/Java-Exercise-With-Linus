@@ -4,17 +4,12 @@ public class AdminColor extends Color{
 
   @Override
    String getText() {
-    return "\u001B[34m";
+    return "\u001B[34m"; //BLUE
   }
 
   @Override
    String getBackground() {
-    return "\u001B[0m";
+    return "\u001B[44m"; //BLUE
   }
 }
 
-/*
-* System.out.println("\u001B[34m"
-            + "This text is blue"
-            + "\u001B[0m");
-* */

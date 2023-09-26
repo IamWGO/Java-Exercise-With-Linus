@@ -16,19 +16,23 @@ public class Main {
     Color adminColor = new AdminColor();
     System.out.println(adminColor.text
             + "Admin theme"
-            +  adminColor.background);
+            +  adminColor.reset);
     Color orderColor = new OrderColor();
 
 
     // Order Theme
     System.out.println(orderColor.text
             + "Order theme"
-            +  orderColor.background);
+            +  orderColor.reset);
     Color productColor = new ProductColor();
 
     // Product Theme
     System.out.println(productColor.text
             + "Order theme"
-            +  productColor.background);
+            +  productColor.reset);
+
+    System.out.println(productColor.successBackground
+            + "Order theme"
+            +  productColor.reset);
   }
 }
