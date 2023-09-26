@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Del3Lyrics {
+  // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  //3. Write example sentence from a specific word in lyrics
+  ArrayList<SpecificWord> specificWords = new ArrayList<>();
+  String lyricsText = "";
   Scanner scan = new Scanner(System.in);
   String filepath;
 
@@ -13,12 +17,12 @@ public class Del3Lyrics {
     this.filepath = filepath;
   }
 
-  // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-  //3. Write example sentence from a specific word in lyrics
-  ArrayList<SpecificWord> specificWords = new ArrayList<>();
   public void writeSentenceFromSpecificWord(){
     // Save words to ArrayList
     getLyricsFromTextFile();
+
+    SpecificWord.OutPut.printDashLine();
+    System.out.println(lyricsText);
 
     // Sort the ArrayList in ascending order
     SpecificWord.OutPut.printHeader();
@@ -53,13 +57,12 @@ public class Del3Lyrics {
       SpecificWord.OutPut.printDashLine();
 
     }
-
   }
 
   private boolean getIsTextContainSpecificWord(String inputText, String randomWord) {
     String[] words = inputText.split(" ");
-    for (int i = 0; i < words.length; i++) {
-      if (words[i].equalsIgnoreCase(randomWord)) {
+    for (String word : words) {
+      if (word.equalsIgnoreCase(randomWord)) {
         return true;
       }
     }
@@ -71,7 +74,6 @@ public class Del3Lyrics {
     return  (int)(Math.random() * range) + min;
   }
 
-
   private void getLyricsFromTextFile(){
     String filename = filepath + "lyrics.txt";
     Scanner contentLines;
@@ -79,6 +81,7 @@ public class Del3Lyrics {
       contentLines  = new Scanner(new File(filename));
       while (contentLines.hasNextLine()) {
         String contentLine = contentLines.nextLine();
+        lyricsText = lyricsText.concat(contentLine + "\n");
         setCountSpecificWord(contentLine);
       }
     } catch (FileNotFoundException ex) {
@@ -87,20 +90,19 @@ public class Del3Lyrics {
   }
   private void setCountSpecificWord(String contentLine){
     // Remove all special characters and numbers using a regular expression
-    String cleanedString = contentLine.replaceAll("[0-9\\(\\)]", "");
+    String cleanedString = contentLine.replaceAll("[0-9,()]", "");
 
     String[] words = cleanedString.split(" ");
 
-    for (int i = 0; i < words.length; i++) {
+    for (String word : words) {
       boolean isContain = false;
-      String currentWord = words[i];
 
-      if (currentWord.length() == 1 || currentWord.isEmpty()) continue;
+      if (word.length() == 1 || word.isEmpty()) continue;
 
       if (specificWords != null) {
-        for (int j = 0; j < specificWords.size(); j++) {
-          if (currentWord.equalsIgnoreCase(specificWords.get(j).word)) {
-            specificWords.get(j).setCount();
+        for (SpecificWord specificWord : specificWords) {
+          if (word.equalsIgnoreCase(specificWord.word)) {
+            specificWord.setCount();
             isContain = true;
             break;
           }
@@ -109,7 +111,7 @@ public class Del3Lyrics {
 
       if (!isContain) {
         assert specificWords != null;
-        specificWords.add(new SpecificWord(currentWord));
+        specificWords.add(new SpecificWord(word));
       }
 
     }
