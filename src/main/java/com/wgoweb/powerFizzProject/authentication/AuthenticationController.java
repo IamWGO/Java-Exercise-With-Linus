@@ -1,7 +1,4 @@
-package com.wgoweb.powerFizzProject.Authentication;
-
-import com.wgoweb.powerFizzProject.Authentication.dataClass.Admin;
-import com.wgoweb.powerFizzProject.Authentication.dataClass.Customer;
+package com.wgoweb.powerFizzProject.authentication;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,7 +13,7 @@ public class AuthenticationController {
   Scanner scan = new Scanner(System.in);
   String filename;
   // get path ctrl+ shift + c
-  final String filepath = "src/main/java/com/wgoweb/powerFizzProject/Authentication/dataClass/";
+  final String filepath = "src/main/java/com/wgoweb/powerFizzProject/datafiles/";
 
   boolean isAdmin;
   int maxTry = 3;

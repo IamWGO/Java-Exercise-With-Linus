@@ -1,30 +1,30 @@
-package com.wgoweb.powerFizzProject.basicCms;
+package com.wgoweb.powerFizzProject.member;
 
 import com.wgoweb.powerFizzProject.utility.Colors.AdminColor;
 import com.wgoweb.powerFizzProject.utility.Theme;
 
 public class Member {
-  String firstName;
-  String lastName;
+  String firstname;
+  String lastname;
 
-  public Member(String firstName, String lastName) {
-    this.firstName = firstName;
-    this.lastName = lastName;
+  public Member(String firstname, String lastname) {
+    this.firstname = firstname;
+    this.lastname = lastname;
   }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
+  public void setFirstname(String firstname) {
+    this.firstname = firstname;
   }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
+  public void setLastname(String lastname) {
+    this.lastname = lastname;
   }
 
   public String getMemberInfo(){
-    return firstName + " " + lastName;
+    return firstname + " " + lastname;
   }
   public String objectToLineFormat(){
-    return  firstName + "," + lastName;
+    return  firstname + "," + lastname;
   }
 
 
@@ -52,8 +52,8 @@ public class Member {
       String taskRow =
               OutPut.set.color.text
               + OutPut.set.addWhiteSpace((rowIndex+1) + ".", 3) + "| "
-              + OutPut.set.addWhiteSpace(current.firstName, maxFirstName) + "| "
-              + OutPut.set.addWhiteSpace( current.lastName, maxLastName) + "| "
+              + OutPut.set.addWhiteSpace(current.firstname, maxFirstName) + "| "
+              + OutPut.set.addWhiteSpace( current.lastname, maxLastName) + "| "
               + OutPut.set.color.reset;
       System.out.println(taskRow);
     }

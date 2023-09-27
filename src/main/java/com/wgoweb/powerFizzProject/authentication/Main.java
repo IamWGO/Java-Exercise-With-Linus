@@ -1,4 +1,4 @@
-package com.wgoweb.powerFizzProject.Authentication;
+package com.wgoweb.powerFizzProject.authentication;
 
 public class Main {
   public static void main(String[] args) {

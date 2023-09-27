@@ -1,4 +1,4 @@
-package com.wgoweb.powerFizzProject.basicCms;
+package com.wgoweb.powerFizzProject.member;
 
 public class Main {
   public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package com.wgoweb.powerFizzProject.basicCms;
+package com.wgoweb.powerFizzProject.member;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class MemberController {
   Scanner scan = new Scanner(System.in);
   ArrayList<Member> members = new ArrayList<>();
-  String filename = "src/main/java/com/wgoweb/powerFizzProject/basicCms/MemberFile.txt";
+  String filename = "src/main/java/com/wgoweb/powerFizzProject/datafiles/MemberFile.txt";
 
   public void menu(){
     // GET CONTENT FROM FILE
@@ -52,28 +52,28 @@ public class MemberController {
   }
   private void insertNewItem(){
     // Clear value
-    String firstName = "";
-    String lastName = "";
+    String firstname = "";
+    String lastname = "";
 
     boolean run = true;
     while (run) {
       // print menu
-       Member.OutPut.printInsertUpdateMenu(true, firstName, lastName);
+       Member.OutPut.printInsertUpdateMenu(true, firstname, lastname);
 
       String choiceString = scan.nextLine();
       // use toUpperCase to Q command
       switch (choiceString.toUpperCase()) {
         case "1" -> {
           System.out.print("First Name: ");
-          firstName = scan.nextLine();
+          firstname = scan.nextLine();
         }
       case "2" -> {
         System.out.print("Last Name: ");
-        lastName = scan.nextLine();
+        lastname = scan.nextLine();
       }
         case "3" -> {
           // add to arrayList
-          Member newMember = new Member(firstName, lastName);
+          Member newMember = new Member(firstname, lastname);
           members.add(newMember);
 
           // save task to textFile ex. Lee,Gottlieb
@@ -81,11 +81,11 @@ public class MemberController {
           //isRewrite=false -> to add the new line
           writeToFile(inputLine, false);
 
-          Member.OutPut.set.printInfo("> \""+ firstName +"\" \"" + lastName + "\" is saved !! ");
+          Member.OutPut.set.printInfo("> \""+ firstname +"\" \"" + lastname + "\" is saved !! ");
 
           // clear value and show ADD MENU again
-          firstName = "";
-          lastName = "";
+          firstname = "";
+          lastname = "";
         }
         case "Q" -> run = false; // exit while loop
         default -> Member.OutPut.set.printInfo("Input number 1-4 or Q.");
@@ -143,29 +143,29 @@ public class MemberController {
   }
 
   private void doUpdate(Member selectedMember){
-    String firstName = selectedMember.firstName;
-    String lastName = selectedMember.lastName;
+    String firstname = selectedMember.firstname;
+    String lastname = selectedMember.lastname;
 
     boolean run = true;
     while (run) {
       // print Menu
-      Member.OutPut.printInsertUpdateMenu(false, firstName, lastName);
+      Member.OutPut.printInsertUpdateMenu(false, firstname, lastname);
 
       String choiceString = scan.nextLine();
       // use toUpperCase to Q command
       switch (choiceString.toUpperCase()) {
         case "1" -> {
           System.out.print("First Name: ");
-          firstName = scan.nextLine();
+          firstname = scan.nextLine();
         }
         case "2" -> {
           System.out.print("Last Name: ");
-          lastName = scan.nextLine();
+          lastname = scan.nextLine();
         }
         case "3" -> {
           // update fields in ArrayList
-          selectedMember.setFirstName(firstName);
-          selectedMember.setLastName(lastName);
+          selectedMember.setFirstname(firstname);
+          selectedMember.setLastname(lastname);
 
           // Rewrite file because we update some row in the file
           doRewriteContent();
@@ -298,10 +298,10 @@ public class MemberController {
   private void saveContentLineToArrayList(String contentLine) {
     String[] parts = contentLine.split(",");
     try {
-      String firstName = parts[0];
-      String lastName = parts[1];
+      String firstname = parts[0];
+      String lastname = parts[1];
 
-      Member newMember = new Member(firstName, lastName);
+      Member newMember = new Member(firstname, lastname);
       members.add(newMember);
     } catch (IllegalStateException ex) {  // Skip
       Member.OutPut.set.printWarning("Invalid input string. Expected 2 fields." + ex);
