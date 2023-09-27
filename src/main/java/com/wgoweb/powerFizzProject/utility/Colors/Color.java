@@ -1,4 +1,4 @@
-package com.wgoweb.powerFizzProject.Colors;
+package com.wgoweb.powerFizzProject.utility.Colors;
 
 public abstract class Color {
   public final String reset = "\u001B[0m";
@@ -10,6 +10,8 @@ public abstract class Color {
   public final String pendingBackground	= "\u001B[45m"; //PURPLE
   public final String inActiveText	= "\u001B[36m";  //CYAN
   public final String inActiveBackground	= "\u001B[46m"; //CYAN
+  public final String infoText	= "\u001B[35m"; //PURPLE
+  public final String infoBackground	= "\u001B[45m"; //PURPLE
 
   public String background = getBackground();
   public String text = getText();

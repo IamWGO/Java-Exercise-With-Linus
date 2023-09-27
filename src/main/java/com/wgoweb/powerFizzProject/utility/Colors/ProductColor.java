@@ -1,4 +1,4 @@
-package com.wgoweb.powerFizzProject.Colors;
+package com.wgoweb.powerFizzProject.utility.Colors;
 
 public class ProductColor extends Color{
 

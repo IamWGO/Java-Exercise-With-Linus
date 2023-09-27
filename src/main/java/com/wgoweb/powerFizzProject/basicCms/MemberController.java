@@ -8,20 +8,23 @@ public class MemberController {
   Scanner scan = new Scanner(System.in);
   ArrayList<Member> members = new ArrayList<>();
   String filename = "src/main/java/com/wgoweb/powerFizzProject/basicCms/MemberFile.txt";
+
   public void menu(){
     // GET CONTENT FROM FILE
     getContentFromFile();
 
     boolean run = true;
     while (run) {
-      printMenu();
+      // print main menu
+      Member.OutPut.printMenu();
+      // select menu
       String choice = scan.nextLine();
       System.out.println();
 
       // toUpperCase to check Q command
       switch (choice.toUpperCase()) {
-        case "1" -> printAllRecords();
-        case "2" -> newRecord();
+        case "1" -> printAllItems();
+        case "2" -> insertNewItem();
         case "3" -> updateById();
         case "4" -> deleteById();
         case "Q" -> {
@@ -34,34 +37,32 @@ public class MemberController {
 
   }
 
-  private void printAllRecords(){
+  private void printAllItems(){
     Member.OutPut.printHeadLine();
     if (members.isEmpty()) {
-      Member.OutPut.printEmptyRecord();
+      Member.OutPut.set.printEmptyItem();
     } else {
+      // print all items
       for (int i = 0; i < members.size(); i++) {
         Member.OutPut.printRow(i, members.get(i));
       }
-      Member.OutPut.printEndOfList();
+      Member.OutPut.set.printEndOfList();
     }
 
   }
-  private void newRecord(){
+  private void insertNewItem(){
     // Clear value
     String firstName = "";
     String lastName = "";
 
     boolean run = true;
     while (run) {
-      System.out.print(":::::: NEW Member ::::::" +
-              "\n1. First Name       - " + firstName +
-              "\n2. Last Name - " + lastName +
-              "\n3. Save" +
-              "\nQ. Go back" +
-              "\n\n Select choice : ");
-      String inputString = scan.nextLine();
+      // print menu
+       Member.OutPut.printInsertUpdateMenu(true, firstName, lastName);
+
+      String choiceString = scan.nextLine();
       // use toUpperCase to Q command
-      switch (inputString.toUpperCase()) {
+      switch (choiceString.toUpperCase()) {
         case "1" -> {
           System.out.print("First Name: ");
           firstName = scan.nextLine();
@@ -80,53 +81,57 @@ public class MemberController {
           //isRewrite=false -> to add the new line
           writeToFile(inputLine, false);
 
-          System.out.println("> \""+ firstName +"\" \"" + lastName + "\" is saved !! ");
+          Member.OutPut.set.printInfo("> \""+ firstName +"\" \"" + lastName + "\" is saved !! ");
 
           // clear value and show ADD MENU again
           firstName = "";
           lastName = "";
         }
         case "Q" -> run = false; // exit while loop
-        default -> System.out.println("Input number 1-4 or Q.");
+        default -> Member.OutPut.set.printInfo("Input number 1-4 or Q.");
       }
     }
 
   }
   private void updateById(){
+    // Print All items
+    printAllItems();
+
     while (true) {
       try {
-        // Print All Records
-        printAllRecords();
         // Input number or Q
-        System.out.println("Q - Go back\n" +
-                "Which one do you want to update ?");
+        System.out.println(
+                "Q - Go back | "
+                + "Which one do you want to update ?");
         System.out.print("Select Index: ");
-        String inputChoice = scan.nextLine();
+        String choiceString = scan.nextLine();
 
         // quit while loop if user type q
-        if(inputChoice.equalsIgnoreCase("q")){
+        if(choiceString.equalsIgnoreCase("q")){
           break;
         }
 
         // check if inputChoice is number and in ArrayList Range
-        // will return -1 if no record
-        int selectedIndex = searchRecordByIndex(inputChoice);
+        // will return -1 if no item
+        int selectedIndex = searchItemByIndex(choiceString);
 
         // if not found then ask to input a number or Q
         if (selectedIndex == -1){
-          System.out.print("Not found recode - Select Index: ");
-          scan.nextLine();
+          System.out.println(
+                  Member.OutPut.set.color.warningText
+                  + "Not found item - "
+                  + Member.OutPut.set.color.reset);
           continue;
         }
 
-        // if found record then get data by index
+        // if found item then get data by index
         Member selectedMember = members.get(selectedIndex);
         // update data
         doUpdate(selectedMember);
+        // print success message
+        Member.OutPut.printSuccessUpdate(selectedMember);
 
-        System.out.println(" :: Record \""+ selectedMember.getMemberInfo() +"\" is Updated :: ");
-
-        printAllRecords();
+        printAllItems();
 
         break;
 
@@ -143,15 +148,12 @@ public class MemberController {
 
     boolean run = true;
     while (run) {
-      System.out.print(":::::: Update Member ::::::" +
-              "\n1. First Name       - " + firstName +
-              "\n2. Last Name - " + lastName +
-              "\n3. Update" +
-              "\nQ. Go back" +
-              "\n\n Select choice : ");
-      String inputString = scan.nextLine();
+      // print Menu
+      Member.OutPut.printInsertUpdateMenu(false, firstName, lastName);
+
+      String choiceString = scan.nextLine();
       // use toUpperCase to Q command
-      switch (inputString.toUpperCase()) {
+      switch (choiceString.toUpperCase()) {
         case "1" -> {
           System.out.print("First Name: ");
           firstName = scan.nextLine();
@@ -171,50 +173,55 @@ public class MemberController {
           run = false;
         }
         case "Q" -> run = false; // exit while loop
-        default -> System.out.println("Input number 1-4 or Q.");
+        default -> Member.OutPut.set.printInfo("Input number 1-4 or Q.");
       }
     }
   }
   private void deleteById(){
+    printAllItems();
 
     while (true) {
       try {
-        printAllRecords();
-        System.out.println("Q - Go back\n" +
+
+        System.out.println("Q - Go back |" +
                 "Which one do you want to remove ?");
         System.out.print("Select Index: ");
 
-        String inputString = scan.nextLine();
+        String choiceString = scan.nextLine();
 
         // quit while loop if user type q
-        if(inputString.equalsIgnoreCase("q")){
+        if(choiceString.equalsIgnoreCase("q")){
           break;
         }
 
         // check if inputChoice is number and in ArrayList Range
-        // will return -1 if no record
-        int selectedIndex = searchRecordByIndex(inputString);
+        // will return -1 if no item
+        int selectedIndex = searchItemByIndex(choiceString);
 
         if (selectedIndex == -1){
-          //System.out.println("(-_-\")Not found recode !!");
-          System.out.print("Select Index: ");
-          scan.nextLine();
+          System.out.println(
+                  Member.OutPut.set.color.warningText
+                  + "Not found item - "
+                  + Member.OutPut.set.color.reset
+                  + "enter any key to continue ");
           continue;
         }
 
         // get member info before delete
-        String removingTitle = members.get(selectedIndex).getMemberInfo();
+        Member selectedItem = members.get(selectedIndex);
         // remove Item
         members.remove(selectedIndex);
         // Rewrite file because we remove an item form ArrayList
         doRewriteContent();
-        System.out.println(" :: Record \""+ removingTitle +"\" is removed :: ");
-        printAllRecords();
+        // print success delete
+        Member.OutPut.printSuccessDelete(selectedItem);
+        // print all items
+        printAllItems();
 
         break;
 
       } catch (InputMismatchException ex) {
-        System.out.println(" Input number from 1 - " + members.size() + ".");
+        Member.OutPut.set.printInfo(" Input number from 1 - " + members.size() + ".");
         scan.next();
       }
     }
@@ -222,13 +229,13 @@ public class MemberController {
 
   private void doRewriteContent(){
     // do nothing, if members is empty
-    if (members.isEmpty()) { return; }
+    //if (members.isEmpty()) { return; }
 
     // get the content from ArrayList
     String contentLines = "";
     for (int i = 0; i < members.size(); i++) {
-      contentLines = contentLines.concat(members.get(i).objectToLineFormat() +
-              ((i < (members.size()-1)) ? "\n": ""));
+      contentLines = contentLines.concat(members.get(i).objectToLineFormat()
+                      + ((i < (members.size()-1)) ? "\n": ""));
     }
     //Rewrite Content
     writeToFile(contentLines, true);
@@ -248,11 +255,12 @@ public class MemberController {
         getDataFromTextFile();
       }
     } catch (IOException ex) {
-      System.out.println("An error occurred." + ex);
+      Member.OutPut.set.printWarning("An error occurred." + ex);
     }
   }
 
   /* We use write BufferedWriter */
+  //TODO: fix empty line created when delete all  : might have to change write file library
   private void writeToFile(String writeContent, boolean isRewrite){
     try {
       // Create a FileWriter in append mode (true as the second argument)
@@ -269,7 +277,7 @@ public class MemberController {
       bufferedWriter.close();
       fileWriter.close();
     } catch (IOException e) {
-      System.out.println("An error occurred while adding a line to the file.");
+      Member.OutPut.set.printWarning("An error occurred while adding a line to the file.");
     }
   }
 
@@ -279,11 +287,11 @@ public class MemberController {
       contentLines  = new Scanner(new File(filename));
       while (contentLines.hasNextLine()) {
         String contentLine = contentLines.nextLine();
-        // add EachLine to ArrayList
-        saveContentLineToArrayList(contentLine);
+        // ignore if empty line
+        if (!contentLine.isEmpty()) saveContentLineToArrayList(contentLine);
       }
     } catch (FileNotFoundException ex) {
-      System.out.println("File not found " + ex);
+      Member.OutPut.set.printWarning("File not found " + ex);
     }
   }
 
@@ -295,14 +303,12 @@ public class MemberController {
 
       Member newMember = new Member(firstName, lastName);
       members.add(newMember);
-    } catch (ArrayIndexOutOfBoundsException ex) { // Skip if the last item is empty
-      System.out.println("Index out of bounds." + ex);
     } catch (IllegalStateException ex) {  // Skip
-      System.out.println("Invalid input string. Expected 2 fields." + ex);
+      Member.OutPut.set.printWarning("Invalid input string. Expected 2 fields." + ex);
     }
   }
 
-  private int searchRecordByIndex(String inputString){
+  private int searchItemByIndex(String inputString){
     try {
       int choice = Integer.parseInt(inputString);
       // if choice is not in range then return -1
@@ -315,20 +321,5 @@ public class MemberController {
       // if user input string then return -1
       return  -1;
     }
-  }
-
-
-  private void printMenu(){
-    System.out.print("""
-
-             :::::::::::::::::::: MENU :::::::::::::::::::
-              1. All records
-              2. Insert
-              3. Update
-              4. Delete
-              
-              Q. Exit Program
-              :::::::::::::::::::::::::::::::::::::::::::::::::::::::
-             Select :\s""");
   }
 }

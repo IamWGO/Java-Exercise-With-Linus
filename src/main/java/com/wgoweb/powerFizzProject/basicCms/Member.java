@@ -1,5 +1,8 @@
 package com.wgoweb.powerFizzProject.basicCms;
 
+import com.wgoweb.powerFizzProject.utility.Colors.AdminColor;
+import com.wgoweb.powerFizzProject.utility.Theme;
+
 public class Member {
   String firstName;
   String lastName;
@@ -26,47 +29,64 @@ public class Member {
 
 
   static class OutPut {
+    static Theme set = new Theme(new AdminColor());
     static int maxFirstName = 25;
     static int maxLastName = 25;
     static int headlineLength = 50;
 
     public static void printHeadLine(){
-      String headline = addWhiteSpace("No.", 3) + "| " +
-              addWhiteSpace("First Name", maxFirstName) + "| " +
-              addWhiteSpace( "Last Name", maxLastName) + "| ";
+      String headline =
+              OutPut.set.color.text
+              + OutPut.set.addWhiteSpace("No.", 3) + "| "
+              + OutPut.set.addWhiteSpace("First Name", maxFirstName) + "| "
+              + OutPut.set.addWhiteSpace( "Last Name", maxLastName) + "| "
+              + OutPut.set.color.reset;
 
       headlineLength = headline.length();
-      printDashLine(headlineLength);
+      OutPut.set.printDashLine(headlineLength);
       System.out.println(headline);
-      printDashLine(headlineLength);
+      OutPut.set.printDashLine(headlineLength);
     }
 
     public static void printRow(int rowIndex, Member current) {
-      String taskRow = addWhiteSpace((rowIndex+1) + ".", 3) + "| " +
-             addWhiteSpace(current.firstName, maxFirstName) + "| " +
-              addWhiteSpace( current.lastName, maxLastName) + "| " ;
+      String taskRow =
+              OutPut.set.color.text
+              + OutPut.set.addWhiteSpace((rowIndex+1) + ".", 3) + "| "
+              + OutPut.set.addWhiteSpace(current.firstName, maxFirstName) + "| "
+              + OutPut.set.addWhiteSpace( current.lastName, maxLastName) + "| "
+              + OutPut.set.color.reset;
       System.out.println(taskRow);
     }
 
-    public static void printDashLine(int length){
-      System.out.println("-".repeat(length));
-    }
-    public static void printEmptyRecord() {
-      System.out.println(" ".repeat(10) +
-              "+".repeat(10)  +
-              " No Items " +
-              "+".repeat(10) +
-              " ".repeat(10));
-    }
-    public static void printEndOfList() {
-      System.out.println( "+".repeat(20) + " End of the list " + "+".repeat(20));
+    public static void printMenu(){
+      System.out.print("""
+
+             :::::::::::::::::::: MENU :::::::::::::::::::
+              1. All records
+              2. Insert
+              3. Update
+              4. Delete
+              
+              Q. Exit Program
+              :::::::::::::::::::::::::::::::::::::::::::::::::::::::
+             Select :\s""");
     }
 
-    public static String addWhiteSpace(String text, int maxAmount){
-      if(text.length() > maxAmount){
-        return text.substring(0, maxAmount - 3) + "...";
-      }
-      return text + " ".repeat(maxAmount - text.length());
+    public static void printInsertUpdateMenu(boolean isNewItem, String firstName, String lastName){
+      System.out.print(":::::: "+ (isNewItem ? "NEW MEMBER" : "UPDATE MEMBER") +" ::::::" +
+              "\n1. First Name       - " + firstName +
+              "\n2. Last Name - " + lastName +
+              "\n3. " + (isNewItem ? "save" : "update") +
+              "\nQ. Go back" +
+              "\n\n Select choice : ");
+    }
+
+    public static void printSuccessUpdate(Member member){
+      Member.OutPut.set.printInfo(" ::  \""+ member.getMemberInfo() +"\" is Updated :: ");
+    }
+
+    public static void printSuccessDelete(Member member) {
+      Member.OutPut.set.printInfo(" ::  \""+ member.getMemberInfo() +"\" is removed :: ");
     }
   }
 }
